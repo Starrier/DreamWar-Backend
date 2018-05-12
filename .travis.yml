@@ -1,11 +1,25 @@
 language: java
 
+jdk:
+  - oraclejdk8
+
+cache:
+  directories:
+  - '$HOME/.m2/repository'
+
+#before_install:
+# - chmod +x gradlew
+
 script:
-  mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+  - mvn clean package -DskipTests=true
 
 branches:
   only:
     - master
+
+notifications:
+  email:true
+
 env:
- global:
-   - GH_REF: github.com/Starrier/Dreamwar-Backend.github.io.git
+  global:
+  - GH_REF=https://github.com/Starrier/iShare.git
