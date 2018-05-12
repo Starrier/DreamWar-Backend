@@ -1,3 +1,11 @@
 language: java
 
-mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+script:
+  mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
+branches:
+  only:
+    - master
+env:
+ global:
+   - GH_REF: github.com/Starrier/Dreamwar-Backend.github.io.git
