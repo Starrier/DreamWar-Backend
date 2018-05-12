@@ -22,4 +22,4 @@ notifications:
 
 env:
   global:
-  - GH_REF=https://github.com/Starrier/iShare.git
+  - GH_REF=https://github.com/Starrier/Dreamwar.git
