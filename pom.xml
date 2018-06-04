@@ -140,6 +140,33 @@
 			<version>${swagger.version}</version>
 		</dependency>
 		<!-- END   : RESTful Docs Swagger2 -->
+
+		<!-- Start : Druid -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.1.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.4.5</version>
+		</dependency>
+		<!-- END  : Druid -->
+
+		<!-- Start : ELK -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<!-- END  : ELK-->
+
+
+
 	</dependencies>
 
 	<build>
