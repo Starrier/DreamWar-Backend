@@ -1,4 +1,4 @@
-package org.starrier.dreamwar.config;
+package org.starrier.dreamwar.config.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +24,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(buildApiInf())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.xingguo.springboot.controller"))
+                .apis(RequestHandlerSelectors.basePackage("org.starrier.dreamwar.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }

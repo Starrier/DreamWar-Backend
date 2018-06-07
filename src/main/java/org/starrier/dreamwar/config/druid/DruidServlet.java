@@ -1,4 +1,4 @@
-package org.starrier.dreamwar.druid;
+package org.starrier.dreamwar.config.druid;
 
 /**
  * @Author Starrier

@@ -8,15 +8,14 @@
         http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- 配置_Druid和Spring关联监控配置 -->
-    <bean id="druid-stat-interceptor"
-          class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor"></bean>
+    <bean id="druid-stat-interceptor"  class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor"></bean>
 
     <!-- 方法名正则匹配拦截配置 -->
     <bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut"
           scope="prototype">
         <property name="patterns">
             <list>
-                <value>com.shyroke.mapper.*</value>
+                <value>org.starrier.dreamwar.mapper.*</value>
             </list>
         </property>
     </bean>

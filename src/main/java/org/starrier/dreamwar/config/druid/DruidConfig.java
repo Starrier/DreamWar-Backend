@@ -1,4 +1,4 @@
-package org.starrier.dreamwar.config;
+package org.starrier.dreamwar.config.druid;
 
 /**
  * @Author Starrier
@@ -10,13 +10,12 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.*;
 
 import com.alibaba.druid.pool.DruidDataSource;
 
 @Configuration
+@PropertySource("classpath:druid/druid.properties")
 public class DruidConfig {
     @Value("${spring.datasource.url}")
     private String dbUrl;
