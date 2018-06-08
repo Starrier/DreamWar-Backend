@@ -1,5 +1,11 @@
 package org.starrier.dreamwar.model.dto;
 
+
+/**
+ * @Author Starrier
+ * @Time 2018/6/5.
+ */
+
 import lombok.Getter;
 import lombok.ToString;
 import org.apache.commons.collections4.CollectionUtils;
@@ -13,9 +19,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * @author Xiaoyue Xiao
- */
 @Getter
 @ToString
 public class CustomUserDetails extends User implements UserDetails {

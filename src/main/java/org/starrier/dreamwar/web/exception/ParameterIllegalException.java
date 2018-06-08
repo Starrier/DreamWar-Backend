@@ -1,7 +1,8 @@
 package org.starrier.dreamwar.web.exception;
 
 /**
- * @author Xiaoyue Xiao
+ * @Author Starrier
+ * @Time 2018/6/5.
  */
 public class ParameterIllegalException extends RuntimeException {
 

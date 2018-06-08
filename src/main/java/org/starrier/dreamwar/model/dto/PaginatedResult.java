@@ -1,5 +1,10 @@
 package org.starrier.dreamwar.model.dto;
 
+/**
+ * @Author Starrier
+ * @Time 2018/6/5.
+ */
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,9 +13,6 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
-/**
- * @author Xiaoyue Xiao
- */
 @Accessors(chain = true)
 @NoArgsConstructor
 @Getter

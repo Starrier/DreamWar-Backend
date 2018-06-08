@@ -7,8 +7,10 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 
 /**
- * @author Xiaoyue Xiao
+ * @Author Starrier
+ * @Time 2018/6/5.
  */
+
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
@@ -17,8 +19,14 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     public void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/users/**").authenticated()
+                .antMatchers("/users/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/books/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/swagger-ui.html", "/v2/api-docs",
+                        "/swagger-resources",
+                        "/swagger-resources/configuration/ui",
+                        "/swagger-resources/configuration/security").permitAll()
+
+                .antMatchers(HttpMethod.GET,"/druid/index.html").permitAll()
                 .anyRequest().authenticated();
     }
 

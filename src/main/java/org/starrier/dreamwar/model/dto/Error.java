@@ -1,13 +1,15 @@
 package org.starrier.dreamwar.model.dto;
 
+/**
+ * @Author Starrier
+ * @Time 2018/6/5.
+ */
+
 import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
-/**
- * @author Xiaoyue Xiao
- */
 @Accessors(chain = true)
 public class Error implements Serializable {
 

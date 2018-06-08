@@ -1,4 +1,4 @@
-package org.starrier.dreamwar.controller;
+package org.starrier.dreamwar.web.controller;
 
 /**
  * @Author Starrier

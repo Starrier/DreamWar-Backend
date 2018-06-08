@@ -5,8 +5,10 @@ import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * @author Xiaoyue Xiao
+ * @Author Starrier
+ * @Time 2018/6/5.
  */
+
 @Accessors(chain = true)
 @Setter
 public class ResourceNotFoundException extends RuntimeException {

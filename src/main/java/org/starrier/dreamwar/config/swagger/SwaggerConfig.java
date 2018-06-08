@@ -15,6 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @Author Starrier
  * @Time 2018/6/5.
  */
+
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
@@ -24,7 +25,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(buildApiInf())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("org.starrier.dreamwar.controller"))
+                .apis(RequestHandlerSelectors.basePackage("org.starrier.dreamwar.web.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
@@ -35,6 +36,7 @@ public class SwaggerConfig {
                 .description("DreamWar RESTful APIs Docs")
                 .termsOfServiceUrl("http://dream.starriers.com")
                 .contact(new Contact("Starrier", "https://github.com/Starrier", "starrierc@gmail.com"))
+                .version("1.0")
                 .build();
 
     }

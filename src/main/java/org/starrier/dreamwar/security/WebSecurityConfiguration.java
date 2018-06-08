@@ -6,6 +6,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
 import org.starrier.dreamwar.service.UserService;
 
+/**
+ * @Author Starrier
+ * @Time 2018/6/5.
+ */
+
 @Configuration
 public class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
 

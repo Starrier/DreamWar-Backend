@@ -8,7 +8,8 @@ import org.starrier.dreamwar.model.entity.User;
 import java.util.Optional;
 
 /**
- * @author Xiaoyue Xiao
+ * @Author Starrier
+ * @Time 2018/6/5.
  */
 
 public interface UserService extends UserDetailsService {

@@ -1,8 +1,11 @@
 package org.starrier.dreamwar.constant;
 
+
 /**
- * @author Xiaoyue Xiao
+ * @Author Starrier
+ * @Time 2018/6/5.
  */
+
 public class PageConstant {
 
     public static final int PAGE = 1; // Default page number

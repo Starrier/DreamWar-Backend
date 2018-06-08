@@ -8,8 +8,10 @@ import org.starrier.dreamwar.model.entity.User;
 import java.util.List;
 
 /**
- * @author Xiaoyue Xiao
+ * @Author Starrier
+ * @Time 2018/6/5.
  */
+
 @Repository
 public interface UserRepository {
 

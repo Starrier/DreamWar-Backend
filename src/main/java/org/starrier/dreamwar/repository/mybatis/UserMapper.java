@@ -5,7 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.starrier.dreamwar.repository.UserRepository;
 
 /**
- * @author Xiaoyue Xiao
+ * @Author Starrier
+ * @Time 2018/6/5.
  */
 @Mapper
 public interface UserMapper extends UserRepository {

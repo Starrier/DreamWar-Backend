@@ -1,5 +1,11 @@
 package org.starrier.dreamwar.config.redis;
 
+
+/**
+ * @Author Starrier
+ * @Time 2018/6/5.
+ */
+
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,10 +22,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 
 
-/**
- * @Author Starrier
- * @Time 2018/6/5.
- */
 @Configuration
 @EnableCaching//开启缓存
 public class RedisConfig extends CachingConfigurerSupport {

@@ -13,8 +13,10 @@ import org.starrier.dreamwar.service.UserService;
 import java.util.Optional;
 
 /**
- * @author Xiaoyue Xiao
+ * @Author Starrier
+ * @Time 2018/6/5.
  */
+
 @Service
 public class UserServiceImpl implements UserService {
 

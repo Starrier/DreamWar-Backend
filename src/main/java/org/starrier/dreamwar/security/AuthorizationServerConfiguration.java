@@ -16,7 +16,8 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 import org.starrier.dreamwar.service.UserService;
 
 /**
- * @author Xiaoyue Xiao
+ * @Author Starrier
+ * @Time 2018/6/5.
  */
 @Configuration
 @EnableAuthorizationServer

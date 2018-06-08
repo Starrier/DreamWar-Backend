@@ -1,11 +1,11 @@
-package org.starrier.dreamwar.controller;
+package org.starrier.dreamwar.web.controller;
 
 /**
  * @Author Starrier
  * @Time 2018/6/5.
  */
 
-        import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author 程序猿DD
@@ -16,7 +16,7 @@ package org.starrier.dreamwar.controller;
 @RestController
 public class HelloController {
 
-    @RequestMapping(value = "/hello", method = RequestMethod.GET)
+    @GetMapping(value = "/hello")
     @ResponseBody
     public String hello(@RequestParam String name) {
         return "Hello " + name;

@@ -1,9 +1,9 @@
 package org.starrier.dreamwar.constant;
 
 /**
- * @author Xiaoyue Xiao
+ * @author Starrier
+ * @Time 2018/6/8
  */
-
 
 public class ErrorCode {
 

@@ -1,8 +1,10 @@
 package org.starrier.dreamwar.constant;
 
 /**
- * @author Xiaoyue Xiao
+ * @Author Starrier
+ * @Time 2018/6/5.
  */
+
 public class ResourceNameConstant {
 
     public static final String BOOK = "book";
