@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * @author Starrier
  * @Time 2018/6/8
  */
-@Service
+@Service(value = "bookStoreService")
 public class BookStoreServiceImpl implements BookStoreService {
 
     private final BookStoreRepository bookStoreRepository;

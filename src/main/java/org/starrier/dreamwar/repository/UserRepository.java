@@ -1,11 +1,10 @@
 package org.starrier.dreamwar.repository;
 
 
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.starrier.dreamwar.model.entity.User;
-
-
-import java.util.List;
 
 /**
  * @Author Starrier
@@ -13,18 +12,22 @@ import java.util.List;
  */
 
 @Repository
-public interface UserRepository {
+@CacheConfig(cacheNames = "user")
+public interface UserRepository extends CrudRepository<User,Long> {
 
-    User selectUserById(Long id);
+    User findByUsername(String username);
 
-    User selectUserByUsername(String username);
+    User findUserById(Long id);
 
-    List<User> selectAllUsers();
+//    @CachePut(key = "#p0",value = "username")
+  //  User selectUserByUsername(String username);
 
-    Integer insertUser(User user);
+    //List<User> selectAllUsers();
 
-    Integer updateUserOnPasswordById(User user);
+    //Integer insertUser(User user);
 
-    Integer deleteUserById(Long id);
+   // Integer updateUserOnPasswordById(User user);
+
+   // Integer deleteUserById(Long id);
 
 }

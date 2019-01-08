@@ -1,9 +1,6 @@
 package org.starrier.dreamwar.model.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 
@@ -12,6 +9,7 @@ import lombok.experimental.Accessors;
  * @Time 2018/6/8
  */
 @Accessors(chain = true)
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter

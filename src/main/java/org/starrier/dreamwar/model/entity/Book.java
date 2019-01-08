@@ -1,7 +1,10 @@
 package org.starrier.dreamwar.model.entity;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -9,13 +12,15 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Author Starrier
- * @Time 2018/6/8.
+ * @author  Starrier
+ * @date  2018/6/8.
  */
 @Accessors(chain = true)
+@Builder
 @Data
 @Table(name = "book")
 @Entity
+@AllArgsConstructor
 public class Book implements Serializable{
 
     private static final long serialVersionUID = 8604990093149376515L;
@@ -42,4 +47,6 @@ public class Book implements Serializable{
 
     @Column(name = "book_store_id")
     private Long bookStoreId;
+
+    public Book(){}
 }

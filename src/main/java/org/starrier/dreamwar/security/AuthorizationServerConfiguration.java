@@ -1,3 +1,4 @@
+/*
 package org.starrier.dreamwar.security;
 
 
@@ -13,12 +14,14 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
-import org.starrier.dreamwar.service.UserService;
+import UserService;
 
+*/
 /**
  * @Author Starrier
  * @Time 2018/6/5.
- */
+ *//*
+
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
@@ -65,3 +68,4 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     }
 
 }
+*/

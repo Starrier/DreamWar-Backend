@@ -1,25 +1,18 @@
 package org.starrier.dreamwar.service;
 
 
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Service;
+
 import org.starrier.dreamwar.model.entity.User;
+import org.starrier.dreamwar.model.entity.UserDto;
 
-import java.util.Optional;
+import java.util.List;
 
-/**
- * @Author Starrier
- * @Time 2018/6/5.
- */
+public interface UserService {
 
-public interface UserService extends UserDetailsService {
+    User save(UserDto user);
+    List<User> findAll();
+    void delete(long id);
+    User findOne(String username);
 
-    Optional<User> getUserById(Long id);
-
-    boolean saveUser(User user);
-
-    boolean modifyUserOnPasswordById(User user);
-
-    boolean deleteUserById(Long id);
-
+    User findById(Long id);
 }

@@ -1,12 +1,12 @@
 package org.starrier.dreamwar.service.Impl;
 
 
+import org.starrier.dreamwar.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.starrier.dreamwar.model.entity.Book;
 import org.starrier.dreamwar.model.entity.BookWithBookStore;
-import org.starrier.dreamwar.repository.BookRepository;
 import org.starrier.dreamwar.service.BookService;
 import org.starrier.dreamwar.util.PageUtil;
 
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * @author Starrier
  * @Time 2018/6/8
  */
-@Service
+@Service(value = "bookService")
 public class BookServiceImpl implements BookService {
 
     @Autowired

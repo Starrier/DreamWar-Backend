@@ -1,3 +1,4 @@
+/*
 package org.starrier.dreamwar.config;
 
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -6,10 +7,12 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+*/
 /**
  * @Author Starrier
  * @Time 2018/6/8.
- */
+ *//*
+
 public class SessionInterceptor implements HandlerInterceptor {
 
     @Override
@@ -37,3 +40,4 @@ public class SessionInterceptor implements HandlerInterceptor {
 
     }
 }
+*/

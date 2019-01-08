@@ -1,90 +1,65 @@
 package org.starrier.dreamwar.config.druid;
 
+import com.alibaba.druid.support.http.StatViewServlet;
+import com.alibaba.druid.support.http.WebStatFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+
+
 /**
- * @Author Starrier
- * @Time 2018/6/5.
+ * <p>Configuration of Druid </p>
+ *
+ * @author  Starrier
+ * @date  2018/11/9.
  */
-
-import java.sql.SQLException;
-
-import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.*;
-
-import com.alibaba.druid.pool.DruidDataSource;
-
 @Configuration
-@PropertySource("classpath:druid/druid.properties")
 public class DruidConfig {
-    @Value("${spring.datasource.url}")
-    private String dbUrl;
-    @Value("${spring.datasource.username}")
-    private String username;
-    @Value("${spring.datasource.password}")
-    private String password;
-    @Value("${spring.datasource.driver-class-name}")
-    private String driverClassName;
-    @Value("${spring.datasource.initialSize}")
-    private int initialSize;
-    @Value("${spring.datasource.minIdle}")
-    private int minIdle;
-    @Value("${spring.datasource.maxActive}")
-    private int maxActive;
-    @Value("${spring.datasource.maxWait}")
-    private int maxWait;
-    @Value("${spring.datasource.timeBetweenEvictionRunsMillis}")
-    private int timeBetweenEvictionRunsMillis;
-    @Value("${spring.datasource.minEvictableIdleTimeMillis}")
-    private int minEvictableIdleTimeMillis;
-    @Value("${spring.datasource.validationQuery}")
-    private String validationQuery;
-    @Value("${spring.datasource.testWhileIdle}")
-    private boolean testWhileIdle;
-    @Value("${spring.datasource.testOnBorrow}")
-    private boolean testOnBorrow;
-    @Value("${spring.datasource.testOnReturn}")
-    private boolean testOnReturn;
-    @Value("${spring.datasource.poolPreparedStatements}")
-    private boolean poolPreparedStatements;
-    @Value("${spring.datasource.maxPoolPreparedStatementPerConnectionSize}")
-    private int maxPoolPreparedStatementPerConnectionSize;
-    @Value("${spring.datasource.filters}")
-    private String filters;
-    @Value("${spring.datasource.connectionProperties}")
-    private String connectionProperties;
-    @Value("${spring.datasource.useGlobalDataSourceStat}")
-    private boolean useGlobalDataSourceStat;
 
-    @Bean     //声明其为Bean实例
-    @Primary  //在同样的DataSource中，首先使用被标注的DataSource
-    public DataSource dataSource(){
-        DruidDataSource datasource = new DruidDataSource();
-        datasource.setUrl(this.dbUrl);
-        datasource.setUsername(username);
-        datasource.setPassword(password);
-        datasource.setDriverClassName(driverClassName);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DruidConfig.class);
 
-        //configuration
-        datasource.setInitialSize(initialSize);
-        datasource.setMinIdle(minIdle);
-        datasource.setMaxActive(maxActive);
-        datasource.setMaxWait(maxWait);
-        datasource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
-        datasource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
-        datasource.setValidationQuery(validationQuery);
-        datasource.setTestWhileIdle(testWhileIdle);
-        datasource.setTestOnBorrow(testOnBorrow);
-        datasource.setTestOnReturn(testOnReturn);
-        datasource.setPoolPreparedStatements(poolPreparedStatements);
-        datasource.setMaxPoolPreparedStatementPerConnectionSize(maxPoolPreparedStatementPerConnectionSize);
-        datasource.setUseGlobalDataSourceStat(useGlobalDataSourceStat);
-        try {
-            datasource.setFilters(filters);
-        } catch (SQLException e) {
-            System.err.println("druid configuration initialization filter: "+ e);
-        }
-        datasource.setConnectionProperties(connectionProperties);
-        return datasource;
+
+    /**
+     * {@link ServletRegistrationBean} Provide class to register.
+     *  1. add initialize params.
+     *  2. whether reset or not.
+     * */
+    @Bean
+    public ServletRegistrationBean<StatViewServlet> druidStatViewServlet(){
+
+        LOGGER.info("servletRegistrationBean config start");
+
+        ServletRegistrationBean<StatViewServlet> servletRegistrationBean = new ServletRegistrationBean<>(new StatViewServlet(),"/druid/*");
+
+        servletRegistrationBean.addInitParameter("allow","127.0.0.1");
+        servletRegistrationBean.addInitParameter("loginUsername","admin");
+        servletRegistrationBean.addInitParameter("loginPassword","admin");
+
+        servletRegistrationBean.addInitParameter("resetEnable","fase");
+        return servletRegistrationBean;
+    }
+
+    /**
+     * <p>Register</p>
+     * <p><filterRegistrationBean/p>
+     *  1. Add Filter rules.
+     *  2. 添加不需要忽略的信息格式
+     *
+     * @return filterRegistrationBean
+     */
+    @Bean
+    public FilterRegistrationBean<WebStatFilter> druidStatFilter2(){
+        LOGGER.info("filterRegistrationBean configure start.");
+        FilterRegistrationBean<WebStatFilter> filterRegistrationBean = new FilterRegistrationBean<>(new WebStatFilter());
+
+        filterRegistrationBean.addUrlPatterns("/*");
+
+        filterRegistrationBean.addInitParameter("exclusions","*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
+        return filterRegistrationBean;
     }
 }
+

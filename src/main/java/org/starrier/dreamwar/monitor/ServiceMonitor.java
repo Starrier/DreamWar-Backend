@@ -6,8 +6,10 @@ import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.starrier.dreamwar.web.exception.ServerInternalErrorException;
+import org.starrier.dreamwar.exception.ServerInternalErrorException;
 
 import java.util.Arrays;
 
@@ -19,6 +21,8 @@ import java.util.Arrays;
 @Aspect
 @Component
 public class ServiceMonitor {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServiceMonitor.class);
 
     /**
      * A join point is in the service layer if the method is defined
@@ -40,7 +44,7 @@ public class ServiceMonitor {
         // Log the situation where exception happened
         Object[] args = joinPoint.getArgs();
         Signature signature = joinPoint.getSignature();
-        log.error("[" + signature.toShortString() + "]" + Arrays.toString(args) + "[" + e.toString() + "]");
+        LOGGER.error("[" + signature.toShortString() + "]" + Arrays.toString(args) + "[" + e.toString() + "]");
 
         // Throw a new server internal error exception
         throw new ServerInternalErrorException();

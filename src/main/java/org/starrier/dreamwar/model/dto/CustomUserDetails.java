@@ -1,10 +1,13 @@
+/*
 package org.starrier.dreamwar.model.dto;
 
 
+*/
 /**
  * @Author Starrier
  * @Time 2018/6/5.
- */
+ *//*
+
 
 import lombok.Getter;
 import lombok.ToString;
@@ -12,7 +15,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.starrier.dreamwar.model.entity.User;
+import User;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -48,3 +51,4 @@ public class CustomUserDetails extends User implements UserDetails {
     }
 
 }
+*/

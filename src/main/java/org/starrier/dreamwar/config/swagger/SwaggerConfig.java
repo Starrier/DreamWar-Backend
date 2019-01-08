@@ -20,22 +20,37 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 
+    /**
+     * <p>Configuration</p>
+     * <p>Swagger2 for Base Configuration</p>
+     * <p>package,path etc...</p>
+     *
+     * {@link Docket}
+     * @return Swagger configuration file.
+     */
     @Bean
-    public Docket buildDocket(){
+    public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(buildApiInf())
+                .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("org.starrier.dreamwar.web.controller"))
+                .apis(RequestHandlerSelectors.basePackage("org.starrier.dreamwar.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
-    private ApiInfo buildApiInf(){
+
+
+    /**
+     * <p>Swagger Information</p>
+     * <p>Detail Information for Swagger2 API to be build</p>
+     * {@link ApiInfo}
+     * @return Swagger Information will be return
+     */
+    private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("DreamWar-Backend")
-                .description("DreamWar RESTful APIs Docs")
-                .termsOfServiceUrl("http://dream.starriers.com")
-                .contact(new Contact("Starrier", "https://github.com/Starrier", "starrierc@gmail.com"))
+                .title("springboot利用swagger构建api文档")
+                .description("简单优雅的restfun风格，http://blog.csdn.net/saytime")
+                .termsOfServiceUrl("http://blog.csdn.net/saytime")
                 .version("1.0")
                 .build();
 
