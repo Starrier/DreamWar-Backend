@@ -1,6 +1,7 @@
 package org.starrier.dreamwar.service;
 
 import org.springframework.amqp.rabbit.support.CorrelationData;
+import org.starrier.dreamwar.entity.UserDto;
 import org.starrier.dreamwar.enums.ExchangeEnum;
 
 /**
@@ -19,12 +20,12 @@ public interface RabbitmqService {
     void send(ExchangeEnum exchangeEnum, String routingKey, Object message) throws Exception;
 
     /**
-     *  发送消息到 rabbitmq 消息队列，发送 ack
+     * 发送消息到 rabbitmq 消息队列，发送 ack.
      *
-     * @param exchangeEnum
-     * @param routingKey
-     * @param message
-     * @param correlationData
+     * @param exchangeEnum {@link ExchangeEnum}
+     * @param routingKey {@link ExchangeEnum}
+     * @param user  {@link UserDto}
+     * @param correlationData {@link CorrelationData}
      * */
-    void sendAndAck(ExchangeEnum exchangeEnum, String routingKey, Object message, CorrelationData correlationData);
+    void userRegisterSendAndAck(ExchangeEnum exchangeEnum, String routingKey, UserDto user, CorrelationData correlationData);
 }

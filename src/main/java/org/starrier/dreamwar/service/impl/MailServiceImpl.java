@@ -175,8 +175,6 @@ public class MailServiceImpl implements MailService {
         mailSender.send(message);
     }
     @Override
-    @RabbitListener(queues = "register.mail")
-    @RabbitHandler
     public void sendEmail(String message) throws Exception {
 
         try {

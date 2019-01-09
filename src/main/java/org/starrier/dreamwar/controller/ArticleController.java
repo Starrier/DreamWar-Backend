@@ -278,9 +278,9 @@ public class ArticleController {
     @Cacheable(value = "articles")
     public ResponseEntity<List<Article>> getAllArticles()  {
 
-        CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
+       /* CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
         rabbitmqService.sendAndAck(ExchangeEnum.USER_REGISTER_TOPIC_EXCHANGE, TopicEnum.USER_REGISTER.getTopicRouteKey(), articleService.listArticle(), correlationData);
-
+*/
         articleService.executeAsyn();
 
         return ResponseEntity.ok(articleService.listArticle());
