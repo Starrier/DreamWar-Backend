@@ -9,7 +9,6 @@ import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.starrier.dreamwar.entity.Article;
@@ -56,7 +55,7 @@ public class ArticleServiceImpl implements ArticleService {
     @HystrixCommand
     @Transactional(rollbackOn = Exception.class)
     @Override
-    public  void insertArticle(Article article) {
+    public void insertArticle(Article article) {
 
         LOGGER.info(" ThreadContextService, Current thread:[{}]", Thread.currentThread().getId());
         articleDao.insertArticle(article);
@@ -107,8 +106,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Article> getArticlesByCategoryId(int id) {
-        return  articleDao.getArticlesByCategoryId(id);
+    public Optional<List<Article>> getArticlesByCategoryId(int id) {
+        return  Optional.ofNullable(articleDao.getArticlesByCategoryId(id));
     }
 
 

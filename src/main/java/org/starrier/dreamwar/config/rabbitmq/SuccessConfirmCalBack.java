@@ -1,4 +1,4 @@
-package org.starrier.dreamwar.config;
+package org.starrier.dreamwar.config.rabbitmq;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -5,6 +5,7 @@ import org.starrier.dreamwar.entity.Article;
 import org.starrier.dreamwar.entity.Comment;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.Future;
 
 /**
@@ -66,11 +67,11 @@ public interface ArticleService {
      */
     void removeVote(int articleId, int likeId);
 
-    List<Article> getArticlesByCategoryId(int id);
+    Optional<List<Article>> getArticlesByCategoryId(int id);
 
     List<Article> getArticlesByKeyword(String keyword);
 
-    Article getArticleById(Long id);
+   Article getArticleById(Long id);
 
     List<Comment> getCommentById(Long article_id);
 

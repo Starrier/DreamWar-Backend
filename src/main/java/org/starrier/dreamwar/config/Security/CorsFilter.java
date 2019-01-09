@@ -1,9 +1,8 @@
-package org.starrier.dreamwar.config;
+package org.starrier.dreamwar.config.Security;
 
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;

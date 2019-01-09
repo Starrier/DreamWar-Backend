@@ -9,6 +9,10 @@ public class ResourceNameConstant {
 
     public static final String BOOK = "book";
 
+    public static final String ARTICLE = "article";
+
+    public static final String COMMENT = "comment";
+
     /**
      * Prevent instantiation
      */

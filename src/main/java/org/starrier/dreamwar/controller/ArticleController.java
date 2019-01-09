@@ -12,11 +12,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.starrier.dreamwar.annotation.RateLimit;
+import org.starrier.dreamwar.common.ResourceNameConstant;
 import org.starrier.dreamwar.common.ResponseCode;
 import org.starrier.dreamwar.entity.Article;
 import org.starrier.dreamwar.entity.Comment;
 import org.starrier.dreamwar.enums.ExchangeEnum;
 import org.starrier.dreamwar.enums.TopicEnum;
+import org.starrier.dreamwar.exception.ResourceNotFoundException;
 import org.starrier.dreamwar.repository.ArticleRepository;
 import org.starrier.dreamwar.service.ArticleService;
 import org.starrier.dreamwar.service.impl.ArticleServiceImpl;
@@ -31,6 +33,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
+ *
+ * Article Controller.
+ *
+ *
  * @author  Starrier
  * @date 2018/10/27.
  */
@@ -72,7 +78,7 @@ public class ArticleController {
 
     /**
      * <p>Add article </p>
-     *<p>Insert Article with id</p>
+     * <p>Insert Article with id</p>
      * @see ArticleServiceImpl#insertArticle(Article)
      * @param article Article, this is the real
      * @return return the result whether the method process success or fail or not.
@@ -153,7 +159,7 @@ public class ArticleController {
      *  4. Return the result with {@link ResponseEntity}
      *
      * @see ArticleRepository#deleteById(Object)
-     * @param id delete by id
+     * @param articleId delete by id
      * @return  status code. return 200 while operation have been done successful
      *                      ,and return error code depends on  exception.
      */
@@ -161,17 +167,24 @@ public class ArticleController {
     @DeleteMapping(value = "/{id}", produces = "application/json", consumes = "application/json")
     @CacheEvict(value = "articleId")
     @ResponseBody
-    public ResponseCode deleteArticleById(final @PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteArticleById(final @PathVariable("id") Long articleId) {
 
-        Optional<Article> articleOptional = articleRepository.findById(id);
+        Optional<Article> articleOptional = articleRepository.findById(articleId);
         if (articleOptional.isPresent()) {
             LOGGER.info("Thr article would have been deleted has been checked out:[{}]", articleOptional);
-            articleService.deleteById(id);
-            return ResponseCode.success();
+            articleService.deleteById(articleId);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .build();
         } else {
-            return ResponseCode.error(HttpStatus.NOT_FOUND, "The article which you want to delete is not exist!");
+
+
+             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
+
+
 
     /**
      * <p>Delete</p>
@@ -231,7 +244,7 @@ public class ArticleController {
 
     /**
      * <p>Fetch Article via article's id</p>
-     *1.
+     *
      * @see ArticleServiceImpl#getArticleById(Long)
      * @param id which is article's identify
      * @throws Exception where you can find the more information in it
@@ -242,16 +255,13 @@ public class ArticleController {
     @Cacheable(value = "articleId")
     @GetMapping("/{id}")
     public ResponseCode getArticleById(final @PathVariable(value = "id") Long id) throws  Exception{
-        Optional<Article> articleOptional = articleRepository.findById(id);
+
+        Article articleOptional = articleService.getArticleById(id);
         LOGGER.info("Optional find the information:[{}]", articleOptional);
-        if (!articleOptional.isPresent()) {
-            return ResponseCode.error(HttpStatus.NOT_FOUND, "error");
-        }
 
-
-        Article article = articleService.getArticleById(id);
-        LOGGER.info("Information:[{}]", article);
-        return ResponseCode.success(article);
+        return articleOptional!=null ?
+                ResponseCode.success(articleOptional) :
+                ResponseCode.error(HttpStatus.NOT_FOUND, "error");
     }
 
 
@@ -336,9 +346,12 @@ public class ArticleController {
      * @return ResponseEntity<List<Article>>
      * */
     @RequestMapping("/category")
-    public ResponseEntity<List<Article>> getArticleCategory(final @RequestParam(value = "category_id")int categoryId){
-        List<Article> articles = articleService.getArticlesByCategoryId(categoryId);
+    public ResponseEntity<?> getArticleCategory(final @RequestParam(value = "category_id")int categoryId){
+        Optional<List<Article>> articles = articleService.getArticlesByCategoryId(categoryId);
 
-        return new ResponseEntity<>(articles, HttpStatus.OK);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(articles);
+
     }
 }

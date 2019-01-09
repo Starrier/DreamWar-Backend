@@ -1,4 +1,4 @@
-package org.starrier.dreamwar.config;
+package org.starrier.dreamwar.config.Security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +13,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.starrier.dreamwar.config.JwtAuthenticationFilter;
+import org.starrier.dreamwar.config.Security.JwtAuthenticationEntryPoint;
 
 import javax.annotation.Resource;
 
