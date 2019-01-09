@@ -1,8 +1,8 @@
 package org.starrier.dreamwar.exception;
 
 /**
- * @Author Starrier
- * @Time 2018/6/5.
+ * @author  Starrier
+ * @date  2018/6/5.
  */
 public class ServerInternalErrorException extends RuntimeException {
 

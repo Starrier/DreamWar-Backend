@@ -2,8 +2,8 @@ package org.starrier.dreamwar.repository;
 
 
 import org.springframework.stereotype.Repository;
-import org.starrier.dreamwar.model.entity.Book;
-import org.starrier.dreamwar.model.entity.BookWithBookStore;
+import org.starrier.dreamwar.entity.Book;
+import org.starrier.dreamwar.entity.BookWithBookStore;
 
 import java.util.List;
 

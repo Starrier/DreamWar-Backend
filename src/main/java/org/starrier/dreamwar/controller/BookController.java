@@ -10,8 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.starrier.dreamwar.model.dto.PaginatedResult;
-import org.starrier.dreamwar.model.entity.Book;
+import org.starrier.dreamwar.entity.Book;
 import org.starrier.dreamwar.exception.ResourceNotFoundException;
 
 import java.net.URI;

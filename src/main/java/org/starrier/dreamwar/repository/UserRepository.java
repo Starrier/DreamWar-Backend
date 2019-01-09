@@ -4,7 +4,7 @@ package org.starrier.dreamwar.repository;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import org.starrier.dreamwar.model.entity.User;
+import org.starrier.dreamwar.entity.User;
 
 /**
  * @Author Starrier

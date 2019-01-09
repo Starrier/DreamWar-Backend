@@ -9,8 +9,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.starrier.dreamwar.config.TokenProvider;
-import org.starrier.dreamwar.model.entity.AuthToken;
-import org.starrier.dreamwar.model.entity.LoginUser;
+import org.starrier.dreamwar.entity.AuthToken;
+import org.starrier.dreamwar.entity.LoginUser;
 import org.starrier.dreamwar.service.UserService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)

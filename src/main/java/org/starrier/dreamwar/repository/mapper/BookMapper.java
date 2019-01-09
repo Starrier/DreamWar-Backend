@@ -3,7 +3,7 @@ package org.starrier.dreamwar.repository.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.starrier.dreamwar.model.entity.Book;
+import org.starrier.dreamwar.entity.Book;
 import org.starrier.dreamwar.repository.BookRepository;
 
 import java.util.List;

@@ -2,8 +2,8 @@ package org.starrier.dreamwar.service;
 
 
 
-import org.starrier.dreamwar.model.entity.User;
-import org.starrier.dreamwar.model.entity.UserDto;
+import org.starrier.dreamwar.entity.User;
+import org.starrier.dreamwar.entity.UserDto;
 
 import java.util.List;
 

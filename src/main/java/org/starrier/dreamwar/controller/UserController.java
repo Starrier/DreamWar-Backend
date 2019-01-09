@@ -4,8 +4,8 @@ package org.starrier.dreamwar.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.starrier.dreamwar.model.entity.User;
-import org.starrier.dreamwar.model.entity.UserDto;
+import org.starrier.dreamwar.entity.User;
+import org.starrier.dreamwar.entity.UserDto;
 import org.starrier.dreamwar.service.UserService;
 
 import java.util.List;

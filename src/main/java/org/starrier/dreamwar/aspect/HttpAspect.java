@@ -12,12 +12,14 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
- * @Author Starrier
- * @Time 2018/11/6.
+ * @author Starrier
+ * @date  2018/11/6.
  */
 @Aspect
 @Component
@@ -25,18 +27,29 @@ public class HttpAspect {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(HttpAspect.class);
 
-    @Pointcut("execution(public * org.starrier.dreamwar.controller..*(..))")
+    /**
+     * ThreadLocal variable {@code START_TIME} needs to call the
+     * {@link ThreadLocal#remove()} method,
+     * when referencing.Otherwise,it will result in Out Of Memory.
+     * */
+    private static final ThreadLocal<Long> START_TIME = new ThreadLocal<>();
+
+    @Pointcut(value = "execution(public * org.starrier.dreamwar.controller..*(..))")
     public void log() {
     }
 
 
-    @Before("log()")
+    @Before(value = "log()")
     public void doBefore(JoinPoint joinPoint) {
 
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request =attributes.getRequest();
+        START_TIME.set(System.currentTimeMillis());
 
-        Map params = new HashMap();
+        // 接收到请求，记录请求内容
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+
+        HttpServletRequest request = Objects.requireNonNull(attributes).getRequest();
+
+        Map<String, Object> params = new HashMap<>(6);
 
         params.put("url", request.getRequestURL());
         params.put("method", request.getMethod());
@@ -52,9 +65,9 @@ public class HttpAspect {
     }
 
     @Around("log()")
-    public Object doAround(ProceedingJoinPoint point) {
+    public Object doAround(final ProceedingJoinPoint point) {
         try {
-            Object object=point.proceed();
+            Object object = point.proceed();
             LOGGER.info("doAround");
             return object;
         } catch (Throwable throwable) {
@@ -71,15 +84,16 @@ public class HttpAspect {
 
 
     /**
-     * Fetch return value
-     *
      * @param object
-     * @return
-     */
+     * @throws Throwable running time exception.Maybe it is NPE.
+     * */
     @AfterReturning(returning = "object", pointcut = "log()")
-    public void doAfterReturning(Object object) {
+    public void doAfterReturning(Object object) throws Throwable {
+        // 处理完请求，返回内容
+        LOGGER.info("RESPONSE : " + object);
+        LOGGER.info("SPEND TIME : " + (System.currentTimeMillis() - START_TIME.get()));
 
-        LOGGER.info("RESPONSE : {}", object.toString());
+        START_TIME.remove();
     }
 
 

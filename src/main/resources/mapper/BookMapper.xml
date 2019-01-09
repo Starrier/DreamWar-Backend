@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.starrier.dreamwar.repository.mapper.BookMapper">
 
-    <resultMap id="book" type="org.starrier.dreamwar.model.entity.Book">
+    <resultMap id="book" type="org.starrier.dreamwar.entity.Book">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="author" column="author"/>
@@ -12,7 +12,7 @@
         <result property="bookStoreId" column="book_store_id"/>
     </resultMap>
 
-    <resultMap id="bookWithBookStore" type="org.starrier.dreamwar.model.entity.BookWithBookStore">
+    <resultMap id="bookWithBookStore" type="org.starrier.dreamwar.entity.BookWithBookStore">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="author" column="author"/>

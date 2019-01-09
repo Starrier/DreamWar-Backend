@@ -1,7 +1,7 @@
 package org.starrier.dreamwar.config;
 
 import io.jsonwebtoken.*;
-import org.starrier.dreamwar.model.entity.Constants;
+import org.starrier.dreamwar.entity.Constants;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
