@@ -13,8 +13,6 @@ import java.util.concurrent.Future;
  */
 public interface ArticleService {
 
-
-
     /**
      * Insert Article with Id
      * @param article
@@ -83,4 +81,6 @@ public interface ArticleService {
     void executeAsyn();
 
     Future<Article> collapsingGlobal(Long id);
+
+    List<String> listAllAuthorName();
 }

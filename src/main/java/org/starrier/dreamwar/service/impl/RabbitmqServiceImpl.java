@@ -16,8 +16,12 @@ import org.starrier.dreamwar.service.RabbitmqService;
 public class RabbitmqServiceImpl implements RabbitmqService {
 
 
+    private final RabbitTemplate rabbitTemplate;
+
     @Autowired
-    private RabbitTemplate rabbitTemplate;
+    public RabbitmqServiceImpl(RabbitTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
+    }
 
 
     /**

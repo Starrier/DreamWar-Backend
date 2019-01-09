@@ -7,8 +7,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * @Author Starrier
- * @Time 2018/6/8.
+ * @author Starrier
+ * @date 2018/6/8.
  */
 @Data
 @Accessors(chain = true)

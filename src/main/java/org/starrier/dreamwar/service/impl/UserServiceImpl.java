@@ -22,12 +22,15 @@ import java.util.Set;
 @Service(value = "userService")
 public class UserServiceImpl implements UserDetailsService, UserService {
 
-	@Qualifier("userRepository")
-	@Autowired
-	private UserRepository userDao;
+	private final UserRepository userDao;
+
+	private final BCryptPasswordEncoder bcryptEncoder;
 
 	@Autowired
-	private BCryptPasswordEncoder bcryptEncoder;
+	public UserServiceImpl(@Qualifier("userRepository") UserRepository userDao, BCryptPasswordEncoder bcryptEncoder) {
+		this.userDao = userDao;
+		this.bcryptEncoder = bcryptEncoder;
+	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -41,7 +44,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	private Set<SimpleGrantedAuthority> getAuthority(User user) {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
 		user.getRoles().forEach(role -> {
-			//authorities.add(new SimpleGrantedAuthority(role.getName()));
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName()));
 		});
 		return authorities;

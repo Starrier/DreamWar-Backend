@@ -8,6 +8,8 @@ import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheRemove;
 import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.starrier.dreamwar.entity.Article;
@@ -15,12 +17,13 @@ import org.starrier.dreamwar.entity.Comment;
 import org.starrier.dreamwar.repository.ArticleDao;
 import org.starrier.dreamwar.service.ArticleService;
 
-import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 
 
 /**
@@ -36,8 +39,13 @@ public class ArticleServiceImpl implements ArticleService {
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-    @Resource
-    ArticleDao articleDao;
+
+    private final ArticleDao articleDao;
+
+    @Autowired
+    public ArticleServiceImpl(ArticleDao articleDao) {
+        this.articleDao = articleDao;
+    }
 
 
     /**
@@ -124,11 +132,7 @@ public class ArticleServiceImpl implements ArticleService {
             LOGGER.error("This article:{} is not exist", article);
             return null;
         }
-        
-
-
         return null;
-
     }
 
 
@@ -168,6 +172,15 @@ public class ArticleServiceImpl implements ArticleService {
         return null;
     }
 
+    @Override
+    public List<String> listAllAuthorName() {
+        return articleDao
+                .getAllAuthorName()
+                .stream()
+                .map(Article::getAuthor)
+                .collect(Collectors.toList());
+    }
+
 
     /**
      * @param articleParam List<Long>
@@ -175,7 +188,7 @@ public class ArticleServiceImpl implements ArticleService {
      * */
     @HystrixCommand(commandKey = "getArticleById",
             fallbackMethod = "getArticleByIdError")
-    public List<Article> getArticleById(final List<Long> articleParam) {
+    public Optional<List<Article>> getArticleById(final List<Long> articleParam) {
         LOGGER.info("The current thread :[{}]", Thread.currentThread().getName());
         LOGGER.info("The request param:[{}]", articleParam);
 
@@ -187,7 +200,9 @@ public class ArticleServiceImpl implements ArticleService {
         }
         LOGGER.info("Result :[{}]", articleList);
 
-        return articleList;
+
+
+        return Optional.ofNullable(articleList);
 
     }
 

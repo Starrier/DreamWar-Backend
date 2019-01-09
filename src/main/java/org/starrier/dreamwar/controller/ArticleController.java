@@ -47,20 +47,24 @@ public class ArticleController {
     /**
      * articleRepository.
      * */
-    @Autowired
-    private ArticleRepository articleRepository;
+    private final ArticleRepository articleRepository;
 
     /**
      * articleService.
      * */
-    @Autowired
-    private ArticleService articleService;
+    private final ArticleService articleService;
 
     /**
      * rabbitmqService.
      * */
+    private final RabbitmqService rabbitmqService;
+
     @Autowired
-    private RabbitmqService rabbitmqService;
+    public ArticleController(ArticleService articleService, RabbitmqService rabbitmqService, ArticleRepository articleRepository) {
+        this.articleService = articleService;
+        this.rabbitmqService = rabbitmqService;
+        this.articleRepository = articleRepository;
+    }
 
     /**
      * commentAddServiceClient.
@@ -81,10 +85,10 @@ public class ArticleController {
     @ResponseBody
     public ResponseEntity<?> insertArticleById(@RequestBody Article article)  {
 
-     /*   Date current_time = new Date();
+        Date current_time = new Date();
         long longTime = current_time.getTime();
         Timestamp timestamp = new Timestamp(longTime);
-        article.setCreate_date(timestamp);*/
+        article.setCreate_date(timestamp);
         articleService.insertArticle(article);
 
         /*CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
@@ -243,6 +247,7 @@ public class ArticleController {
         if (!articleOptional.isPresent()) {
             return ResponseCode.error(HttpStatus.NOT_FOUND, "error");
         }
+
 
         Article article = articleService.getArticleById(id);
         LOGGER.info("Information:[{}]", article);

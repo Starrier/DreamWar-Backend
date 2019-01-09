@@ -1,6 +1,8 @@
 package org.starrier.dreamwar.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -14,8 +16,11 @@ import java.util.List;
  * @date  2018/10/27.
  */
 @Accessors(chain = true)
+@Builder
 @Data
+@Table(name = "article")
 @Entity
+@AllArgsConstructor
 public class Article implements Serializable {
 
     /**
@@ -47,7 +52,8 @@ public class Article implements Serializable {
     @Column
     private String category;
 
-    @Column
+
+    @Column(name = "author")
     private String author;
 
     @Column
@@ -63,4 +69,5 @@ public class Article implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "comment_id", referencedColumnName = "id"))
     private List<Comment> article_comments;
 
+    public Article(){}
 }

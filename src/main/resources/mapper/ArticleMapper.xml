@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 将namespace的值设置为DAO类对应的路径 -->
-<mapper namespace="org.starrier.dreamwar.repository.ArticleDao">
+<mapper namespace="org.starrier.dreamwar.repository.mapper.ArticleMapper">
     <!-- 目的：为DAO接口方法提供sql语句配置 -->
     <resultMap id="Article" type="org.starrier.dreamwar.entity.Article">
         <result property="id" column="id" />
@@ -104,5 +104,10 @@
     <select id="getArticlesByKeyword" parameterType="org.starrier.dreamwar.entity.Article" resultMap="Article">
 
     </select>
+
+    <select id="getAllAuthorName" parameterType="org.starrier.dreamwar.entity.Article" resultMap="Article"><![CDATA[
+        select *
+        from article;
+    ]]></select>
 
 </mapper>
