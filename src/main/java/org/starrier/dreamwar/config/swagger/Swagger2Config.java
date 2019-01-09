@@ -3,55 +3,53 @@ package org.starrier.dreamwar.config.swagger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
+import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author Starrier
  * @Time 2018/6/5.
  */
-
 @Configuration
-public class SwaggerConfig {
-
-    /**
-     * <p>Configuration</p>
-     * <p>Swagger2 for Base Configuration</p>
-     * <p>package,path etc...</p>
-     *
-     * {@link Docket}
-     * @return Swagger configuration file.
-     */
+@EnableSwagger2
+public class Swagger2Config {
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
+                .globalOperationParameters(setToken())
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("org.starrier.dreamwar.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.htsc.cams.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
-
-
-    /**
-     * <p>Swagger Information</p>
-     * <p>Detail Information for Swagger2 API to be build</p>
-     * {@link ApiInfo}
-     * @return Swagger Information will be return
-     */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("springboot利用swagger构建api文档")
-                .description("简单优雅的restfun风格，http://blog.csdn.net/saytime")
-                .termsOfServiceUrl("http://blog.csdn.net/saytime")
+                .title("Spring Boot中使用Swagger2构建RESTful APIs")
                 .version("1.0")
                 .build();
+    }
 
+    /**
+     * 设置token参数
+     * @return
+     */
+    private List<Parameter> setToken(){
+        ParameterBuilder tokenPar = new ParameterBuilder();
+        List<Parameter> pars = new ArrayList<Parameter>();
+        tokenPar.name("Authorization").description("令牌").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
+        pars.add(tokenPar.build());
+        return pars;
     }
 }

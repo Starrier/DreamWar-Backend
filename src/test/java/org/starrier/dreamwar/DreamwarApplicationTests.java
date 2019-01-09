@@ -1,4 +1,4 @@
-package org.starrier;
+package org.starrier.dreamwar;
 
 import org.apache.log4j.Logger;
 import org.junit.Test;

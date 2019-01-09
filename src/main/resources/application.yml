@@ -60,6 +60,18 @@ spring:
     host: localhost
     port: 5672
     publisher-confirms: true
+  mail:
+    host: smtp.qq.com
+    username: 1342878298@qq.com
+    password: kguvdnnqvintfjff
+    default-encoding: UTF-8
+    properties:
+      mail:
+        stmp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml

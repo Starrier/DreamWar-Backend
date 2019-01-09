@@ -34,7 +34,7 @@ public class RabbitmqServiceImpl implements RabbitmqService {
      */
     @Async
     @Override
-    public void send(ExchangeEnum exchangeEnum, String routingKey,Object message) throws Exception {
+    public void send(ExchangeEnum exchangeEnum, String routingKey, Object message) throws Exception {
 
         rabbitTemplate.convertAndSend(exchangeEnum.getName(),routingKey,message);
     }

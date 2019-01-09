@@ -1,4 +1,4 @@
-package org.starrier.dreamwar.config.Security;
+package org.starrier.dreamwar.config.security;
 
 
 import org.slf4j.Logger;

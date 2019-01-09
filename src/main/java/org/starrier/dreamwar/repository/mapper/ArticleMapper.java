@@ -1,9 +1,9 @@
 package org.starrier.dreamwar.repository.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.starrier.dreamwar.repository.ArticleDao;
 import org.starrier.dreamwar.entity.Article;
 import org.starrier.dreamwar.entity.Comment;
-import org.starrier.dreamwar.repository.ArticleDao;
 
 import java.util.List;
 

@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.starrier.dreamwar.entity.Article;
-import org.starrier.dreamwar.entity.Comment;
 import org.starrier.dreamwar.repository.ArticleDao;
+import org.starrier.dreamwar.entity.Comment;
 import org.starrier.dreamwar.service.ArticleService;
 
 import javax.transaction.Transactional;

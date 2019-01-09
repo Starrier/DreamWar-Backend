@@ -1,4 +1,4 @@
-package org.starrier.dreamwar.config.Security;
+package org.starrier.dreamwar.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.starrier.dreamwar.config.JwtAuthenticationFilter;
-import org.starrier.dreamwar.config.Security.JwtAuthenticationEntryPoint;
 
 import javax.annotation.Resource;
 
@@ -50,8 +49,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().
                 authorizeRequests()
-                .antMatchers("/token/*", "/signup").permitAll()
-                .antMatchers("/swagger-ui.html","/druid/index.html").permitAll()
+                .antMatchers("/token/*", "/signup", "/swagger-ui.html").permitAll()
+                // swagger start
+               /* .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/swagger-resources").permitAll()
+                .antMatchers("/images/**").permitAll()
+                .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/v2/*").permitAll()
+                .antMatchers("/configuration/*").permitAll()*/
+                // swagger end
+                .antMatchers("/druid/index.html").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()

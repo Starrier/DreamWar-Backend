@@ -17,8 +17,6 @@ import java.util.concurrent.CountDownLatch;
  * @Author Starrier
  * @Time 2018/11/6.
  */
-
-
 @Configuration
 public class RedisConfig extends CachingConfigurerSupport {
 
@@ -55,8 +53,6 @@ public class RedisConfig extends CachingConfigurerSupport {
         }
 
         public class Receiver {
-
-
             private CountDownLatch latch;
 
             @Autowired
