@@ -95,10 +95,7 @@ public class ArticleController {
         article.setCreate_date(timestamp);
         articleService.insertArticle(article);
 
-        /*CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
-        LOGGER.info("RabbitMQ CallbackSender UUID :{}", correlationData.getId());
 
-        String author = article.getAuthor();*/
 
         /**
          * 1.发送消息到rabbitmq服务端
@@ -106,10 +103,7 @@ public class ArticleController {
          * 3.异步消息，邮件通知
          */
         try {
-     /* rabbitmqService.sendAndAck(ExchangeEnum.USER_REGISTER_TOPIC_EXCHANGE, TopicEnum.USER_REGISTER.getTopicRouteKey(), author, correlationData);*//*
-            LOGGER.info("RabbitMQ Queue Has Receive Message:{}", article);
-            articleService.insertArticle(article);
-*/
+
             return new ResponseEntity<>("Article have been inserted!", HttpStatus.OK);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {

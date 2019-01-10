@@ -17,7 +17,11 @@ public interface UserRepository extends CrudRepository<User,Long> {
 
     User findByUsername(String username);
 
+    User findUserByEmail(String email);
+
     User findUserById(Long id);
+
+
 
 //    @CachePut(key = "#p0",value = "username")
   //  User selectUserByUsername(String username);

@@ -4,6 +4,12 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * UsrDto，while user register and login,{@link User}
+ *
+ * @author Starrier
+ * @date  2019/1/10
+ * */
 @Data
 public class UserDto {
 
@@ -15,5 +21,7 @@ public class UserDto {
     private Date update_time;
     private Date create_time;
     private String avatar;
+
+    private String validateCode;
 
 }

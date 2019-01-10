@@ -1,19 +1,20 @@
 package org.starrier.dreamwar.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.rabbit.annotation.RabbitHandler;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import org.starrier.dreamwar.entity.UserDto;
+import org.starrier.dreamwar.entity.User;
 import org.starrier.dreamwar.enums.ExchangeEnum;
 import org.starrier.dreamwar.service.MailService;
 import org.starrier.dreamwar.service.RabbitmqService;
+import org.starrier.dreamwar.util.JsonConvertUtils;
 
 /**
  * @Author Starrier
@@ -33,7 +34,6 @@ public class RabbitmqServiceImpl implements RabbitmqService {
     public RabbitmqServiceImpl(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
     }
-
 
     /**
      * 发送消息到rabbitmq消息队列
@@ -55,12 +55,17 @@ public class RabbitmqServiceImpl implements RabbitmqService {
     @Override
     @RabbitListener(queues = "register.mail")
     @RabbitHandler
-    public void userRegisterSendAndAck(ExchangeEnum exchangeEnum, String routingKey, @Payload UserDto message, CorrelationData correlationData) {
+    public void userRegisterSendAndAck(ExchangeEnum exchangeEnum, String routingKey, @Payload JSONObject message, CorrelationData correlationData) {
         rabbitTemplate.convertAndSend(exchangeEnum.getName(), routingKey, message, correlationData);
+
+        User user = JsonConvertUtils.convertJSONToObject(message);
         if (LOGGER.isInfoEnabled()) {
-            LOGGER.info("UserDto:[{}]", message);
+            LOGGER.info("UserDto:[{}]", user);
         }
 
-        mailService.sendSimpleMail(message.getEmail(), "test", "test");
+        String stringBuffer = "Hello，" +
+                user.getUsername() +
+                ",Your account has been registered successfully";
+        mailService.sendHtmlMail(user.getEmail(), "test", stringBuffer);
     }
 }

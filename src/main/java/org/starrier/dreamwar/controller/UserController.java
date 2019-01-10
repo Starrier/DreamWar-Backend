@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,10 @@ import org.starrier.dreamwar.enums.ExchangeEnum;
 import org.starrier.dreamwar.enums.TopicEnum;
 import org.starrier.dreamwar.service.RabbitmqService;
 import org.starrier.dreamwar.service.UserService;
+import org.starrier.dreamwar.util.FastJsonConvertUtil;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.UUID;
 
@@ -54,11 +58,11 @@ public class UserController {
     }
 
     @PostMapping(value="/signup")
-    public User saveUser(@RequestBody UserDto user){
+    public User saveUser(@RequestBody User user){
 
         CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
         try {
-            rabbitmqService.userRegisterSendAndAck(ExchangeEnum.USER_REGISTER_TOPIC_EXCHANGE, TopicEnum.USER_REGISTER.getTopicRouteKey(), user, correlationData);
+            rabbitmqService.userRegisterSendAndAck(ExchangeEnum.USER_REGISTER_TOPIC_EXCHANGE, TopicEnum.USER_REGISTER.getTopicRouteKey(), FastJsonConvertUtil.toJsonObject(user), correlationData);
             LOGGER.info("RabbitMQ Queue Has Receive Message:{}", user);
             return userService.save(user);
         }catch (Exception e) {
@@ -67,6 +71,27 @@ public class UserController {
             }
             return userService.save(user);
         }
+
+    }
+
+    @RequestMapping(value = "/validate", method = {RequestMethod.POST, RequestMethod.GET})
+    public ResponseCode registerValidate(HttpServletRequest request, HttpServletResponse response) {
+        String action = request.getParameter("action");
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("The request action is : [{}]", action);
+        }
+        String email = request.getParameter("email");
+        String validateCode = request.getParameter("validateCode");
+        try {
+            userService.processActivate(email, validateCode);
+            return ResponseCode.success();
+        } catch (Exception e) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("The process has failed:[{}]", e.getMessage());
+            }
+            return ResponseCode.error(HttpStatus.NOT_FOUND, "failed");
+        }
+
 
     }
 

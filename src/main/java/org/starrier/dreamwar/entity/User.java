@@ -148,6 +148,9 @@ public class User implements Serializable {
     private Set<Role> roles;
 
 
+    @Transient
+    private Long validateCode;
+
 
 
     /**

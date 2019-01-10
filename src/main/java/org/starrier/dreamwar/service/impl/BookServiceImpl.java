@@ -1,7 +1,7 @@
 package org.starrier.dreamwar.service.impl;
 
 
-import org.starrier.dreamwar.repository.BookRepository;
+import org.starrier.dreamwar.repository.BookDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,10 +22,10 @@ import java.util.stream.Collectors;
 public class BookServiceImpl implements BookService {
 
     @Autowired
-    private final BookRepository bookRepository;
+    private final BookDao bookRepository;
 
     @Autowired
-    public BookServiceImpl(BookRepository bookRepository) {
+    public BookServiceImpl(BookDao bookRepository) {
         this.bookRepository = bookRepository;
     }
 

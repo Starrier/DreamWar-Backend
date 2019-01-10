@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
@@ -15,12 +16,17 @@ import javax.annotation.PostConstruct;
  * @Author Starrier
  * @Time 2018/11/11.
  */
+@Component
 public class FailConfirmCallback implements RabbitTemplate.ReturnCallback {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FailConfirmCallback.class);
 
+    private final RabbitTemplate rabbitTemplate;
+
     @Autowired
-    private RabbitTemplate rabbitTemplate;
+    public FailConfirmCallback(RabbitTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
+    }
 
     @PostConstruct
     public void init() {

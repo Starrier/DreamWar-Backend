@@ -11,7 +11,7 @@ import java.util.List;
  * @author Xiaoyue Xiao
  */
 @Repository
-public interface BookRepository {
+public interface BookDao {
 
     Book selectBookById(Long id);
 

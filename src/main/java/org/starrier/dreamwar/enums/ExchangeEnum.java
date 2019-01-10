@@ -2,12 +2,14 @@ package org.starrier.dreamwar.enums;
 
 import lombok.Getter;
 
+import java.io.Serializable;
+
 /**
  * @Author Starrier
  * @Time 2018/11/11.
  */
 @Getter
-public enum ExchangeEnum
+public enum ExchangeEnum implements Serializable
 {
     /**
      * 用户注册交换配置枚举

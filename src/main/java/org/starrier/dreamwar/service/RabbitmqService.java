@@ -1,7 +1,7 @@
 package org.starrier.dreamwar.service;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.amqp.rabbit.support.CorrelationData;
-import org.starrier.dreamwar.entity.UserDto;
 import org.starrier.dreamwar.enums.ExchangeEnum;
 
 /**
@@ -21,11 +21,7 @@ public interface RabbitmqService {
 
     /**
      * 发送消息到 rabbitmq 消息队列，发送 ack.
-     *
-     * @param exchangeEnum {@link ExchangeEnum}
-     * @param routingKey {@link ExchangeEnum}
-     * @param user  {@link UserDto}
-     * @param correlationData {@link CorrelationData}
+     *  @param message Entity Object
      * */
-    void userRegisterSendAndAck(ExchangeEnum exchangeEnum, String routingKey, UserDto user, CorrelationData correlationData);
+    void userRegisterSendAndAck(ExchangeEnum exchangeEnum, String routingKey, JSONObject message, CorrelationData correlationData);
 }

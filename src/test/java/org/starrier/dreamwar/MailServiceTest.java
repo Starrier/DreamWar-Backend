@@ -34,12 +34,17 @@ public class MailServiceTest {
 
     @Test
     public void testHtmlMail() throws Exception {
-        String content="<html>\n" +
-                "<body>\n" +
-                "    <h3>hello world ! 这是一封html邮件!</h3>\n" +
-                "</body>\n" +
-                "</html>";
-        mailService.sendHtmlMail("3241807181@qq.com","test simple mail",content);
+        StringBuffer sb=new StringBuffer("点击下面链接激活账号，48小时生效，否则重新注册账号，链接只能使用一次，请尽快激活！</br>");
+        sb.append("<a href=\"http://localhost:8080/springmvc/user/register?action=activate&email=");
+        sb.append("1342878298@qq.com");
+        sb.append("&validateCode=");
+        sb.append(11);
+        sb.append("\">http://localhost:8080/springmvc/user/register?action=activate&email=");
+        sb.append("1342878298@qq.com");
+        sb.append("&validateCode=");
+        sb.append(11);
+        sb.append("</a>");
+        mailService.sendHtmlMail("3241807181@qq.com","test simple mail",sb.toString());
     }
 
     @Test

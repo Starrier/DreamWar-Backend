@@ -15,7 +15,7 @@ public interface UserService {
      * @param user user.
      * @return the result with user whether the process executed successfully or not.
      * */
-    User save(UserDto user);
+    User save(User user);
 
     /**
      * Fetch all the users.
@@ -47,4 +47,21 @@ public interface UserService {
      * @return the found user.
      * */
     User findById(Long id);
+
+
+    /**
+     * Find user by email.
+     *
+     * @param email user'email
+     * @return the user
+     * */
+    User findByEmail(String email);
+
+    /**
+     * Process Activate.
+     *
+     * @param email  email.
+     * @param validateCode validateCode.
+     * */
+    void processActivate(String email, String validateCode);
 }
