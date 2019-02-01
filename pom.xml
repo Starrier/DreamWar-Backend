@@ -30,7 +30,7 @@
 		<pagehelper.version>1.2.10</pagehelper.version>
 		<spring.websocket.version>5.0.9.RELEASE</spring.websocket.version>
 		<spring.cloud.stream.version>2.0.0.RELEASE</spring.cloud.stream.version>
-		<fasterxml.version>2.9.7</fasterxml.version>
+		<fasterxml.version>2.9.8</fasterxml.version>
 		<mybatis.version>2.0.0</mybatis.version>
 		<druid.version>1.1.13</druid.version>
 	</properties>
@@ -47,6 +47,10 @@
 				</exclusion>
 				<exclusion>
 					<artifactId>jackson-annotations</artifactId>
+					<groupId>com.fasterxml.jackson.core</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jackson-core</artifactId>
 					<groupId>com.fasterxml.jackson.core</groupId>
 				</exclusion>
 			</exclusions>
@@ -68,6 +72,14 @@
 					<artifactId>HdrHistogram</artifactId>
 					<groupId>org.hdrhistogram</groupId>
 				</exclusion>
+				<exclusion>
+					<artifactId>jackson-databind</artifactId>
+					<groupId>com.fasterxml.jackson.core</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jackson-core</artifactId>
+					<groupId>com.fasterxml.jackson.core</groupId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -80,6 +92,12 @@
 			<groupId>net.logstash.logback</groupId>
 			<artifactId>logstash-logback-encoder</artifactId>
 			<version>4.4</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>jackson-databind</artifactId>
+					<groupId>com.fasterxml.jackson.core</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!-- END  : ELK -->
 		<!--  Start : Logging -->
@@ -115,6 +133,16 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>jackson-core</artifactId>
+					<groupId>com.fasterxml.jackson.core</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jackson-databind</artifactId>
+					<groupId>com.fasterxml.jackson.core</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!--   AOP      -->
 		<dependency>
@@ -141,6 +169,12 @@
 			<groupId>org.springframework.restdocs</groupId>
 			<artifactId>spring-restdocs-mockmvc</artifactId>
 			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>jackson-databind</artifactId>
+					<groupId>com.fasterxml.jackson.core</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -232,6 +266,12 @@
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
 			<version>0.6.0</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>jackson-databind</artifactId>
+					<groupId>com.fasterxml.jackson.core</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
@@ -274,6 +314,10 @@
 			<exclusions>
 				<exclusion>
 					<artifactId>jackson-annotations</artifactId>
+					<groupId>com.fasterxml.jackson.core</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jackson-core</artifactId>
 					<groupId>com.fasterxml.jackson.core</groupId>
 				</exclusion>
 			</exclusions>
