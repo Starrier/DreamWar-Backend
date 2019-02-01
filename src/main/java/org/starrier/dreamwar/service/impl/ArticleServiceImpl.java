@@ -6,11 +6,18 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheKey;
 import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheRemove;
 import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheResult;
+import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Recover;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.starrier.dreamwar.common.Result;
+import org.starrier.dreamwar.common.enums.ResultCode;
 import org.starrier.dreamwar.entity.Article;
 import org.starrier.dreamwar.repository.ArticleDao;
 import org.starrier.dreamwar.entity.Comment;
@@ -116,10 +123,19 @@ public class ArticleServiceImpl implements ArticleService {
         return articleDao.getArticlesByKeyword(keyword);
     }
 
+    @Retryable(value = NotFoundException.class,maxAttempts = 3,backoff = @Backoff(delay = 2000L,multiplier = 1.5))
     @Override
     public Article getArticleById(Long id) {
 
         return articleDao.getArticleById(id);
+    }
+
+    @Recover
+    public Result getArticleByIdRecovery(NotFoundException e) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Request has got exception:[{}]", e.getMessage());
+        }
+        return Result.error(ResultCode.RESULE_DATA_NONE, "Request timeout");
     }
 
     @Override
@@ -146,8 +162,11 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     @Async("taskExecutor")
-    public void executeAsyn() {
-        LOGGER.info(" Start Execute Asyn task....");
+    public void executeAsynchronous() {
+
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(" Start Execute Asynchronous task....");
+        }
         try {
             Thread.sleep(1000);
         } catch (Exception e) {
@@ -157,7 +176,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     /**
-     * Global Collapse.
+     *  Global Collapse.
      * @return {@link Future}
      * */
     @HystrixCollapser(batchMethod = "getArticleById",
@@ -167,7 +186,10 @@ public class ArticleServiceImpl implements ArticleService {
     })
     @Override
     public Future<Article> collapsingGlobal(final Long id) {
-        LOGGER.info("Single Request:[{}]", id);
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Single Request:[{}]", id);
+            LOGGER.info("The real method invoked is getArticleById()");
+        }
         return null;
     }
 
@@ -188,18 +210,23 @@ public class ArticleServiceImpl implements ArticleService {
     @HystrixCommand(commandKey = "getArticleById",
             fallbackMethod = "getArticleByIdError")
     public Optional<List<Article>> getArticleById(final List<Long> articleParam) {
-        LOGGER.info("The current thread :[{}]", Thread.currentThread().getName());
-        LOGGER.info("The request param:[{}]", articleParam);
+
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("The current thread :[{}]", Thread.currentThread().getName());
+            LOGGER.info("The request param:[{}]", articleParam);
+        }
 
         List<Article> articleList = new ArrayList<>();
 
         for (Long articleId : articleParam) {
-            LOGGER.info("Request Id:[{}]", articleId);
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info("Request Id:[{}]", articleId);
+            }
             articleList.add(articleDao.getArticleById(articleId));
         }
-        LOGGER.info("Result :[{}]", articleList);
-
-
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Result :[{}]", articleList);
+        }
 
         return Optional.ofNullable(articleList);
 

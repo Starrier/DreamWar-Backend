@@ -8,18 +8,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import org.starrier.dreamwar.common.ResponseCode;
+import org.starrier.dreamwar.common.Result;
+import org.starrier.dreamwar.common.enums.ResultCode;
 import org.starrier.dreamwar.entity.User;
-import org.starrier.dreamwar.entity.UserDto;
-import org.starrier.dreamwar.enums.ExchangeEnum;
-import org.starrier.dreamwar.enums.TopicEnum;
+import org.starrier.dreamwar.common.enums.ExchangeEnum;
+import org.starrier.dreamwar.common.enums.TopicEnum;
 import org.starrier.dreamwar.service.RabbitmqService;
 import org.starrier.dreamwar.service.UserService;
 import org.starrier.dreamwar.util.FastJsonConvertUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -58,24 +61,51 @@ public class UserController {
     }
 
     @PostMapping(value="/signup")
-    public User saveUser(@RequestBody User user){
-
-        CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
+    public ResponseEntity<?>  saveUser(@RequestBody @Valid User user, BindingResult bindingResult){
+        boolean userExist = userService.userExist(user);
+        if (userExist) {
+            String message = "username has been exist!";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+        }
+        List<ObjectError> allErrors;
+        if (bindingResult.hasErrors()) {
+            allErrors = bindingResult.getAllErrors();
+            for (ObjectError objectError : allErrors) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Validate process occurs errors:[{}]", objectError);
+                }
+            }
+            String message = String.format("Register Fail,More details[%s]", bindingResult.getFieldError().getDefaultMessage());
+            return  ResponseEntity
+                    .status(HttpStatus.PARTIAL_CONTENT)
+                    .body(allErrors);
+        }
         try {
-            rabbitmqService.userRegisterSendAndAck(ExchangeEnum.USER_REGISTER_TOPIC_EXCHANGE, TopicEnum.USER_REGISTER.getTopicRouteKey(), FastJsonConvertUtil.toJsonObject(user), correlationData);
-            LOGGER.info("RabbitMQ Queue Has Receive Message:{}", user);
-            return userService.save(user);
+            sendRegisterEmail(user);
+            userService.save(user);
+            return ResponseEntity.status(HttpStatus.OK).body(user);
         }catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("Article have got error:[{}]", e.getMessage());
             }
-            return userService.save(user);
+            return ResponseEntity.badRequest().build();
         }
 
     }
 
+    private void sendRegisterEmail(User user) {
+
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("New User:[{}] has been registered", user);
+            LOGGER.info("RabbitMQ Queue Has Receive Message:{}", user);
+        }
+
+        CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
+        rabbitmqService.userRegisterSendAndAck(ExchangeEnum.USER_REGISTER_TOPIC_EXCHANGE, TopicEnum.USER_REGISTER.getTopicRouteKey(), FastJsonConvertUtil.toJsonObject(user), correlationData);
+    }
+
     @RequestMapping(value = "/validate", method = {RequestMethod.POST, RequestMethod.GET})
-    public ResponseCode registerValidate(HttpServletRequest request, HttpServletResponse response) {
+    public Result registerValidate(HttpServletRequest request, HttpServletResponse response) {
         String action = request.getParameter("action");
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("The request action is : [{}]", action);
@@ -84,12 +114,12 @@ public class UserController {
         String validateCode = request.getParameter("validateCode");
         try {
             userService.processActivate(email, validateCode);
-            return ResponseCode.success();
+            return Result.success();
         } catch (Exception e) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("The process has failed:[{}]", e.getMessage());
             }
-            return ResponseCode.error(HttpStatus.NOT_FOUND, "failed");
+            return Result.error(ResultCode.RESULE_DATA_NONE, "failed");
         }
 
 
@@ -105,13 +135,13 @@ public class UserController {
     @ResponseBody
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseCode deleteUserById(@PathVariable("id") Long id) {
+    public Result deleteUserById(@PathVariable("id") Long id) {
         try {
             userService.delete(id);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return ResponseCode.success();
+        return Result.success();
     }
 
 }

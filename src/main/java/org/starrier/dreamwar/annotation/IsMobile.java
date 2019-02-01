@@ -5,9 +5,15 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 /**
+ *  Information: this {@link IsMobile} annotation has been {@link Deprecated}
+ *                since {@link @version 0.0.1}
+ *
  * @author Starrier
  * @date 2019/1/7.
+ *
+ * @version 0.0.1
  */
+@Deprecated
 @Documented
 @Target({
         ElementType.METHOD,
@@ -30,8 +36,4 @@ public @interface IsMobile {
      * @return the message.
      * */
     String message() default "手机格式校验失败，请核对手机格式";
-
-    Class<?>[] group() default {};
-
-    Class<? extends Payload>[]  payload() default {};
 }

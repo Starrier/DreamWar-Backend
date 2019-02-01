@@ -1,22 +1,10 @@
 package org.starrier.dreamwar.entity;
 
-/**
- * The first refactor on 2019/1/7.
- * 1. refactor the class of role
- * 2. use annotation framework,lombok and spring jpa.
- *
- * @Author Starrier
- * @Time 2018/6/5.
- */
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
-
-
 import org.hibernate.validator.constraints.Length;
-
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -26,6 +14,14 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
+/**
+ * The first refactor on 2019/1/7.
+ * 1. refactor the class of role
+ * 2. use annotation framework,lombok and spring jpa.
+ *
+ * @author Starrier
+ * @date 2018/6/5.
+ */
 @Accessors(chain = true)
 @Data
 @Entity
@@ -64,8 +60,11 @@ public class User implements Serializable {
     private static final Integer AVATAR_LENGTH = 200;
 
 
+    /**
+     * @param id, Long type,this is the unique identify in user.
+     * */
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
@@ -84,15 +83,17 @@ public class User implements Serializable {
      * @param password attributes managed by the corresponding {@param username}
      * */
     @ApiModelProperty(value = "user's password")
-    @Length(min = 5,message = "Password should be more than 5 characters at least")
-    @Column(name="password")
+    @Length(min = 5,
+            message = "Password should be more than 5 characters at least")
+    @Column(name = "password")
     @NotEmpty(message = "password do not allow empty")
     private String password;
 
     /**
      * @param status of {@param user},it is used to indicate whether
      *               the current {@param user} is available or not.
-     *               it {@value} of {@code status} is 1,the current user could be use,
+     *               it {@value} of {@code status} is 1,
+     *               the current user could be use,
      *               otherwise,disabled.
      * */
     @Column
@@ -105,15 +106,27 @@ public class User implements Serializable {
      * */
     @Email(message = "Please provide a valid Email")
     @Size(max = 50)
-    //@NotEmpty(message = "email must add")
+    @NotEmpty(message = "email must add")
     @Column
     @ApiModelProperty(value = "email")
     private String email;
 
     /**
+     *
+     * warning: this {@link IsMobile} annotation unavailable up to now.
+     *           and this annotation will be {@link Deprecated} in the
+     *           future version.
+     *
      * mobile String.
+     * <p>
+     *     {@code
+     *     @IsMobile(message = "Please provider a valid Mobile")
+     *     this method has been deprecated,because of the unexpected exception.
+     *     }
+     * </p>
+     *
+     * @since version 0.0.1-SNAPSHOT
      * */
-   // @IsMobile(message = "Please provider a valid Mobile")
     @Column
     @ApiModelProperty(value = "mobile")
     private String mobile;
@@ -141,20 +154,26 @@ public class User implements Serializable {
 
 
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    /**
+     * @param roles.
+     * */
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "USER_ROLES", joinColumns = {
             @JoinColumn(name = "USER_ID") }, inverseJoinColumns = {
             @JoinColumn(name = "ROLE_ID") })
     private Set<Role> roles;
 
 
+    /**
+     * @param validateCode. Long type.
+     * */
     @Transient
     private Long validateCode;
 
 
 
     /**
-     * User's NoArgsConstructor
+     * User's NoArgsConstructor，{@link NoArgsConstructor} can get more details.
      *
      * <p>
      *     <pre>

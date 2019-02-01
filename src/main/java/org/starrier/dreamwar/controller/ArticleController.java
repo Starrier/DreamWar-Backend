@@ -3,7 +3,6 @@ package org.starrier.dreamwar.controller;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -12,10 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.starrier.dreamwar.annotation.RateLimit;
-import org.starrier.dreamwar.common.ResponseCode;
+import org.starrier.dreamwar.common.Result;
+import org.starrier.dreamwar.common.enums.ResultCode;
 import org.starrier.dreamwar.entity.Article;
-import org.starrier.dreamwar.enums.ExchangeEnum;
-import org.starrier.dreamwar.enums.TopicEnum;
 import org.starrier.dreamwar.repository.ArticleRepository;
 import org.starrier.dreamwar.service.ArticleService;
 import org.starrier.dreamwar.service.RabbitmqService;
@@ -28,7 +26,6 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  *
@@ -40,7 +37,7 @@ import java.util.UUID;
  */
 @Api(value = "Article")
 @RestController
-@RequestMapping(value = "/article")
+@RequestMapping(value = "/articles")
 public class ArticleController {
 
     /**
@@ -127,8 +124,6 @@ public class ArticleController {
      * @return return the result
      */
     public ResponseEntity<?> postComment(final @RequestParam("id") Long articleId, final Comment comment) {
-
-
         Optional<Article> articleOptional = articleRepository.findById(articleId);
         if (!articleOptional.isPresent()) {
             return new ResponseEntity<>("The corresponding article does not exist!", HttpStatus.BAD_REQUEST);
@@ -192,10 +187,10 @@ public class ArticleController {
     @DeleteMapping(value = "/author/{author}",
             produces = "application/json",
             consumes = "application/json")
-    public ResponseCode<Object> deleteArticleByAuthor(final @PathVariable("author") String author) {
+    public Result deleteArticleByAuthor(final @PathVariable("author") String author) {
 
         articleService.deleteArticleByAuthor(author);
-        return ResponseCode.success(HttpStatus.OK);
+        return Result.success(HttpStatus.OK);
     }
 
     /**
@@ -213,12 +208,12 @@ public class ArticleController {
     @CachePut(value = "articleId")
     @ResponseBody
     @PutMapping(value = "/updateArticle", produces = "application/json", consumes = "application/json")
-    public ResponseCode<Object> updateArticle(final @RequestBody Article article) {
+    public Result updateArticle(final @RequestBody Article article) {
 
         Optional<Article> articleOptional = articleRepository.findById(article.getId());
         if (!articleOptional.isPresent()) {
             LOGGER.info("Update  Article is  not exit:{}", article);
-            return ResponseCode.error(HttpStatus.NOT_FOUND,"Update Article is not exist");
+            return Result.error(ResultCode.RESULE_DATA_NONE,"Update Article is not exist");
         }
         try {
             Date current_time = new Date();
@@ -230,7 +225,7 @@ public class ArticleController {
         } catch (Exception e) {
             LOGGER.error("An error occurred  in the process of updating the article:[{}]", e.toString());
         }
-        return ResponseCode.success(200);
+        return Result.success(200);
     }
 
 
@@ -246,14 +241,14 @@ public class ArticleController {
     @ApiOperation(value = "Get article with id.")
     @Cacheable(value = "articleId")
     @GetMapping("/{id}")
-    public ResponseCode getArticleById(final @PathVariable(value = "id") Long id) throws  Exception{
+    public Result getArticleById(final @PathVariable(value = "id") Long id) throws  Exception{
 
         Article articleOptional = articleService.getArticleById(id);
         LOGGER.info("Optional find the information:[{}]", articleOptional);
 
         return articleOptional!=null ?
-                ResponseCode.success(articleOptional) :
-                ResponseCode.error(HttpStatus.NOT_FOUND, "error");
+                Result.success(articleOptional) :
+                Result.error(ResultCode.RESULE_DATA_NONE, "error");
     }
 
 
@@ -272,10 +267,7 @@ public class ArticleController {
     @Cacheable(value = "articles")
     public ResponseEntity<List<Article>> getAllArticles()  {
 
-       /* CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
-        rabbitmqService.sendAndAck(ExchangeEnum.USER_REGISTER_TOPIC_EXCHANGE, TopicEnum.USER_REGISTER.getTopicRouteKey(), articleService.listArticle(), correlationData);
-*/
-        articleService.executeAsyn();
+        articleService.executeAsynchronous();
 
         return ResponseEntity.ok(articleService.listArticle());
     }
@@ -283,17 +275,19 @@ public class ArticleController {
     /**
      * Fetch  Comment By Id With Feign.
      * @param id Long
-     * @return return the result {@link ResponseCode}
+     * @return return the result {@link Result}
      * */
     @ResponseBody
     @GetMapping(value = "{id}/comment")
-    public ResponseCode<Object> getCommentById(final @PathVariable("id") Long id) {
+    public Result getCommentById(final @PathVariable("id") Long id) {
+
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("This  is  ArticleController  Find Comment with id:{}", id);
+        }
 
 
 
-        LOGGER.info("This  is  ArticleController  Find Comment with id:{}", id);
-
-        return ResponseCode.success( );
+        return Result.success( );
     }
 
     /**
@@ -320,15 +314,15 @@ public class ArticleController {
      * <p>Find all the articles which include the word given</p>
      * 1.
      * @param keyword String
-     * @return {@link ResponseCode}
+     * @return {@link Result}
      * */
     @GetMapping(value = "/search/{keyword}", consumes = "application/json", produces = "application/json")
-    public ResponseCode<Object> search(final @PathVariable(value = "keyword") String keyword){
+    public Result search(final @PathVariable(value = "keyword") String keyword){
         Observable.just("hello world").subscribe(System.out::print);
 
         List<Article> articles = articleService.getArticlesByKeyword(keyword);
 
-       return ResponseCode.success(articles);
+       return Result.success(articles);
     }
 
     /**

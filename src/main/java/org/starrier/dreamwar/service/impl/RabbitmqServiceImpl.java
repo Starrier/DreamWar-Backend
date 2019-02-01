@@ -11,7 +11,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.starrier.dreamwar.entity.User;
-import org.starrier.dreamwar.enums.ExchangeEnum;
+import org.starrier.dreamwar.common.enums.ExchangeEnum;
 import org.starrier.dreamwar.service.MailService;
 import org.starrier.dreamwar.service.RabbitmqService;
 import org.starrier.dreamwar.util.JsonConvertUtils;

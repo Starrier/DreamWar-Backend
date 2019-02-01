@@ -1,7 +1,7 @@
 package org.starrier.dreamwar.util;
 
 
-import org.starrier.dreamwar.exception.ParameterIllegalException;
+import org.starrier.dreamwar.common.exception.ParameterIllegalException;
 
 /**
  * @author Xiaoyue Xiao

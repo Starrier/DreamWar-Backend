@@ -1,4 +1,4 @@
-package org.starrier.dreamwar.enums;
+package org.starrier.dreamwar.common.enums;
 
 import lombok.Getter;
 

@@ -1,4 +1,4 @@
-package org.starrier.dreamwar.exception;
+package org.starrier.dreamwar.common.exception;
 
 /**
  * @Author Starrier

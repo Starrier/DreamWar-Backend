@@ -2,7 +2,7 @@ package org.starrier.dreamwar.service;
 
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.amqp.rabbit.support.CorrelationData;
-import org.starrier.dreamwar.enums.ExchangeEnum;
+import org.starrier.dreamwar.common.enums.ExchangeEnum;
 
 /**
  * @Author Starrier

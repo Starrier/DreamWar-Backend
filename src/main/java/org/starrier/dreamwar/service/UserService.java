@@ -64,4 +64,14 @@ public interface UserService {
      * @param validateCode validateCode.
      * */
     void processActivate(String email, String validateCode);
+
+
+    /**
+     * Determine whether new register user already exists or not.
+     *
+     * @param user new register user
+     * @return the boolean, indicates whether the user already exists or not.
+     *          {@link User#username}
+     * */
+    boolean userExist(final User user);
 }

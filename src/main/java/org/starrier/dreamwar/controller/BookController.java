@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.starrier.dreamwar.entity.Book;
-import org.starrier.dreamwar.exception.ResourceNotFoundException;
+import org.starrier.dreamwar.common.exception.ResourceNotFoundException;
 
 import java.net.URI;
 

@@ -24,19 +24,19 @@ public interface ArticleService {
      * Delete Article via id
      * @param id
      * */
-    void deleteById(Long id);
+    void deleteById(final Long id);
 
     /**
      *  Delete Article By Author
      * @param author
      * */
-    void deleteArticleByAuthor(String author);
+    void deleteArticleByAuthor(final String author);
 
     /**
     * Delete Article By Article
     * @param article
     */
-    void deleteArticle(Article article);
+    void deleteArticle(final Article article);
 
     /**
      * Fetch All Articles
@@ -77,10 +77,20 @@ public interface ArticleService {
 
     List<Article> getArticlesByAuthor(final String author);
 
+    /**
+     * <p>Update Article.</p>
+     * @param article
+     * */
     void updateArticle(Article article);
 
-    void executeAsyn();
+    /**
+     *  Asynchronous method.
+     * */
+    void executeAsynchronous();
 
+    /**
+     *
+     * */
     Future<Article> collapsingGlobal(Long id);
 
     List<String> listAllAuthorName();

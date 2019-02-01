@@ -1,4 +1,4 @@
-package org.starrier.dreamwar.exception;
+package org.starrier.dreamwar.common.exception;
 
 import lombok.Setter;
 import lombok.experimental.Accessors;

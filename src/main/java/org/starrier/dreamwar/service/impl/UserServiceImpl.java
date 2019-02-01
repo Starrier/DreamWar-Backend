@@ -133,6 +133,20 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		}
 	}
 
+	/**
+	 * Determine whether new register user already exists or not.
+	 *
+	 * @param user new register user
+	 * @return the boolean, indicates whether the user already exists or not.
+	 *         <p>
+	 *             if the user exist, them method will return true,otherwise,false.
+	 *         </p>
+	 * */
+	@Override
+	public boolean userExist(User user) {
+		return userRepository.findByUsername(user.getUsername()) != null;
+	}
+
 	@Override
     public User save(User user) {
 		new User();

@@ -12,7 +12,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.starrier.dreamwar.common.ResponseCode;
+import org.starrier.dreamwar.common.Result;
+import org.starrier.dreamwar.common.enums.ResultCode;
 import org.starrier.dreamwar.entity.Comment;
 import org.starrier.dreamwar.repository.CommentRepository;
 import org.starrier.dreamwar.service.CommentService;
@@ -51,7 +52,7 @@ public class CommentController {
     @ResponseBody
     @PostMapping(produces = "application/json")
     @Transactional(rollbackOn = Exception.class)
-    public ResponseCode<Object> addComment(@RequestBody Comment comment, Long articleId){
+    public Result addComment(@RequestBody Comment comment, Long articleId){
 
         Optional<Comment> commentOptional = commentRepository.findById(articleId);
         comment.setDate(new Date());
@@ -66,10 +67,10 @@ public class CommentController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return ResponseCode.success("Success");
+            return Result.success("Success");
         } catch (DuplicateKeyException exception) {
             LOGGER.error("Add  Comment Error:{}", exception);
-            return ResponseCode.error(HttpStatus.NOT_FOUND, exception.toString());
+            return Result.error(ResultCode.RESULE_DATA_NONE, exception.toString());
         }
     }
 
@@ -95,10 +96,10 @@ public class CommentController {
     @DeleteMapping(value = "/{id}")
     @CacheEvict(value = "comment",key = "#id")
     @Transactional(rollbackOn = Exception.class)
-    public ResponseCode<Object> deleteCommentByArticleId(@PathVariable(value = "id") Long id,
-                                                         @RequestParam(value = "article_id",required = false)Long article_id) {
+    public Result deleteCommentByArticleId(@PathVariable(value = "id") Long id,
+                                                   @RequestParam(value = "article_id",required = false)Long article_id) {
         commentService.deleteById(id);
-        return ResponseCode.success(200);
+        return Result.success();
     }
 
     /**
@@ -136,9 +137,9 @@ public class CommentController {
     @GetMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
     @Cacheable(value = "comment")
     @Transactional
-    public ResponseCode<Object> showComment(@PathVariable(value = "id") Long id,
-                                            @RequestParam(value = "pageNum", required = false, defaultValue = "3") int pageNum,
-                                            @RequestParam(value = "pageSize", required = false, defaultValue = "3") int pageSize) {
+    public Result showComment(@PathVariable(value = "id") Long id,
+                                      @RequestParam(value = "pageNum", required = false, defaultValue = "3") int pageNum,
+                                      @RequestParam(value = "pageSize", required = false, defaultValue = "3") int pageSize) {
         LOGGER.info("Get  Comment via id....");
         LOGGER.info("Comment id:{}", id);
 
@@ -147,7 +148,7 @@ public class CommentController {
         PageInfo<Comment> commentPageInfo = new PageInfo<>(commentList);
         List<Comment> pageList=commentPageInfo.getList();
 
-        return ResponseCode.success(pageList);
+        return Result.success(pageList);
     }
 
     @ResponseBody
