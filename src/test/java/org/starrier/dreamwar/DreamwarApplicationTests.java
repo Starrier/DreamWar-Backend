@@ -1,8 +1,9 @@
 package org.starrier.dreamwar;
 
-import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -14,13 +15,13 @@ public class DreamwarApplicationTests {
 	public void contextLoads() {
 	}
 
-	private Logger logger = Logger.getLogger(getClass());
+	private Logger LOGGER = LoggerFactory.getLogger(getClass());
 
 	@Test
 	public void test()throws Exception {
 		for(int i=0;i<100;i++) {
-			logger.info("Test  Logger ：");
-			logger.debug("------------- Debug ------------------");
+			LOGGER.info("Test  Logger ：");
+			LOGGER.debug("------------- Debug ------------------");
 		}
 	}
 

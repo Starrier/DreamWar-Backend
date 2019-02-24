@@ -4,7 +4,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.Polymorphism;
 import org.hibernate.validator.constraints.Length;
+import org.starrier.dreamwar.annotation.IsMobile;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -127,6 +129,7 @@ public class User implements Serializable {
      *
      * @since version 0.0.1-SNAPSHOT
      * */
+    @IsMobile
     @Column
     @ApiModelProperty(value = "mobile")
     private String mobile;

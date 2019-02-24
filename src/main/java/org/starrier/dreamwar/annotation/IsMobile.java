@@ -13,7 +13,6 @@ import java.lang.annotation.*;
  *
  * @version 0.0.1
  */
-@Deprecated
 @Documented
 @Target({
         ElementType.METHOD,
