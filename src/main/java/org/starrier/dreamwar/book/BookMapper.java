@@ -1,0 +1,21 @@
+package org.starrier.dreamwar.book;
+
+
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+/**
+ * @author  Starrier
+ */
+@Mapper
+public interface BookMapper extends BookDao {
+
+    @Override
+    List<Book> selectBooksByLowPriceAndHighPrice(@Param("lowPrice") Double lowPrice, @Param("highPrice") Double highPrice);
+
+    @Override
+    List<Book> selectBooksByPage(@Param("offset") Integer offset, @Param("perPage") Integer perPage);
+
+}

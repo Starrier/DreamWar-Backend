@@ -5,7 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.starrier.dreamwar.service.MailService;
+import org.starrier.dreamwar.mail.MailService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 

@@ -1,7 +1,7 @@
 package org.starrier.dreamwar.util;
 
 import com.alibaba.fastjson.JSONObject;
-import org.starrier.dreamwar.entity.User;
+import org.starrier.dreamwar.user.entity.User;
 
 /**
  * @author Starrier

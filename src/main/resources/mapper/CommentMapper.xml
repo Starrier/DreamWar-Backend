@@ -3,17 +3,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 将namespace的值设置为DAO类对应的路径 -->
-<mapper namespace="org.starrier.dreamwar.repository.CommentDao">
+<mapper namespace="org.starrier.dreamwar.comment.CommentDao">
     <!-- 目的：为DAO接口方法提供sql语句配置 -->
 
-    <resultMap id="Comment" type="org.starrier.dreamwar.entity.Comment">
+    <resultMap id="Comment" type="org.starrier.dreamwar.comment.Comment">
         <result property="id" column="id" />
         <result property="article_id" column="article_id" />
         <result property="comment" column="comment"/>
         <result property="date" column="date" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
     </resultMap>
 
-    <insert id="addComment" parameterType="org.starrier.dreamwar.entity.Comment">
+    <insert id="addComment" parameterType="org.starrier.dreamwar.comment.Comment">
         insert into comment (
             article_id,
             comment,
@@ -24,7 +24,7 @@
         )
     </insert>
 
-    <delete id="deleteById" parameterType="org.starrier.dreamwar.entity.Comment">
+    <delete id="deleteById" parameterType="org.starrier.dreamwar.comment.Comment">
         delete
         from
             comment
@@ -41,7 +41,7 @@
             article.id=#{id}
     </update>
 
-    <select id="showComment" resultType="org.starrier.dreamwar.entity.Comment">
+    <select id="showComment" resultType="org.starrier.dreamwar.comment.Comment">
         select *
         FROM
             comment
