@@ -1,6 +1,10 @@
 package org.starrier.dreamwar.controller;
 
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +32,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- *
  * Article Controller.
- *
  *
  * @author  Starrier
  * @date 2018/10/27.
@@ -40,24 +42,13 @@ import java.util.Optional;
 @RequestMapping(value = "/articles")
 public class ArticleController {
 
-    /**
-     * LOGGER.
-     * */
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ArticleController.class);
 
-    /**
-     * articleRepository.
-     * */
     private final ArticleRepository articleRepository;
 
-    /**
-     * articleService.
-     * */
     private final ArticleService articleService;
 
-    /**
-     * rabbitmqService.
-     * */
     private final RabbitmqService rabbitmqService;
 
     @Autowired
@@ -68,10 +59,6 @@ public class ArticleController {
     }
 
     /**
-     * commentAddServiceClient.
-     * */
-
-    /**
      * <p>Add article </p>
      * <p>Insert Article with id</p>
      * @see ArticleServiceImpl#insertArticle(Article)
@@ -80,19 +67,11 @@ public class ArticleController {
      */
     @ApiOperation(value = "Post Article")
     @ApiImplicitParam(paramType = "path", name = "id", dataType = "Long", value = "article id", required = true)
-    @ApiResponses({@ApiResponse(code = 200,message = ""),
+    @ApiResponses({@ApiResponse(code = 200,message = "SUCCESS"),
                   @ApiResponse(code = 404 ,message = "")})
     @PostMapping(produces = "application/json", consumes = "application/json")
     @ResponseBody
     public ResponseEntity<?> insertArticleById(@RequestBody Article article)  {
-
-        Date current_time = new Date();
-        long longTime = current_time.getTime();
-        Timestamp timestamp = new Timestamp(longTime);
-        article.setCreate_date(timestamp);
-        articleService.insertArticle(article);
-
-
 
         /**
          * 1.发送消息到rabbitmq服务端
@@ -100,7 +79,7 @@ public class ArticleController {
          * 3.异步消息，邮件通知
          */
         try {
-
+            articleService.insertArticle(article);
             return new ResponseEntity<>("Article have been inserted!", HttpStatus.OK);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
@@ -108,11 +87,7 @@ public class ArticleController {
             }
             return new ResponseEntity<>("Article inserted has been failed! !", HttpStatus.FAILED_DEPENDENCY);
         }
-
     }
-
-
-
 
     /**
      * <p>Post comment</p>
@@ -123,6 +98,7 @@ public class ArticleController {
      * @param comment Comment detail content
      * @return return the result
      */
+    @PostMapping(value = "/comment", consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> postComment(final @RequestParam("id") Long articleId, final Comment comment) {
         Optional<Article> articleOptional = articleRepository.findById(articleId);
         if (!articleOptional.isPresent()) {

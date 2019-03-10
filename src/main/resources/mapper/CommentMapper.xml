@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 将namespace的值设置为DAO类对应的路径 -->
-<mapper namespace="org.starrier.dreamwar.dao.CommentDao">
+<mapper namespace="org.starrier.dreamwar.repository.CommentDao">
     <!-- 目的：为DAO接口方法提供sql语句配置 -->
 
     <resultMap id="Comment" type="org.starrier.dreamwar.entity.Comment">
@@ -46,7 +46,7 @@
         FROM
             comment
         WHERE
-            article_id=#{id}
+            id=#{id}
         ORDER BY
             id
         DESC

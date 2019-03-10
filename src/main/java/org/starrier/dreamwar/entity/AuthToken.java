@@ -19,9 +19,4 @@ import java.io.Serializable;
 public class AuthToken implements Serializable {
 
     private String token;
-
-
-
-
-
 }

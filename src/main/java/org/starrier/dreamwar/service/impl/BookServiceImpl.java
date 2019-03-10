@@ -19,7 +19,8 @@ import java.util.stream.Collectors;
  * @Time 2018/6/8
  */
 @Service(value = "bookService")
-public class BookServiceImpl implements BookService {
+public class
+BookServiceImpl implements BookService {
 
     @Autowired
     private final BookDao bookRepository;

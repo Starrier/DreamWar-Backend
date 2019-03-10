@@ -3,7 +3,11 @@ package org.starrier.dreamwar.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,30 +39,37 @@ public class CommentController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CommentController.class);
 
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-
     @Autowired
     CommentService commentService;
 
     @Autowired
     CommentRepository commentRepository;
 
-   /**
-    *  <p>Post Comment with comment</p>
-    *  @param comment article'comment
-    * @param articleId  the article which wants to add comment
-    * */
+    /**
+     * <p>Post Comment with comment</p>
+     *
+     * @param comment   article'comment
+     * @param articleId the article which wants to add comment
+     */
+    @ApiOperation(value = "Add Comment")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "articleId", dataType = "Long", paramType = "query", value = "article id", required = true),
+            @ApiImplicitParam()})
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "SUCCESS"),
+            @ApiResponse(code = 404, message = "")})
     @ResponseBody
     @PostMapping(produces = "application/json")
     @Transactional(rollbackOn = Exception.class)
-    public Result addComment(@RequestBody Comment comment, Long articleId){
+    public Result addComment(@RequestBody Comment comment, Long articleId) {
 
         Optional<Comment> commentOptional = commentRepository.findById(articleId);
-        comment.setDate(new Date());
 
-        LOGGER.info("Write Comment....");
-        LOGGER.info("article_id:{},comment:{},date:{}",comment.getArticle_id(),comment.getComment(),comment.getDate());
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.info("Write Comment....");
+            LOGGER.info("article_id:{},comment:{},date:{}", comment.getArticle_id(), comment.getComment(), comment.getDate());
+        }
+
 
         try {
             commentService.addComment(comment);
@@ -75,29 +86,20 @@ public class CommentController {
     }
 
     /**
-     * Add comment with article_id
-     *
-     * @param id
-     */
-    public void addComment(@PathVariable(value = "id") Long id) {
-
-    }
-
-    /**
      * Delete comment
-     * @param id
      *
-     * 1. 判断查询文章是否存在
-     * 2. 判断当前 Dlete 操作用户是否为该文章的 Owner（管理员不具有改功能）
-     * 3. 尝试操作，并返回结果（Success: 删除评论 fail ;  抛出操作失败的异常）
+     * @param id 1. 判断查询文章是否存在
+     *           2. 判断当前 Dlete 操作用户是否为该文章的 Owner（管理员不具有改功能）
+     *           3. 尝试操作，并返回结果（Success: 删除评论 fail ;  抛出操作失败的异常）
      */
     @ApiOperation(value = "Delete Comment By Id Which id is article's id")
     @ResponseBody
     @DeleteMapping(value = "/{id}")
-    @CacheEvict(value = "comment",key = "#id")
+    @CacheEvict(value = "comment", key = "#id")
     @Transactional(rollbackOn = Exception.class)
     public Result deleteCommentByArticleId(@PathVariable(value = "id") Long id,
-                                                   @RequestParam(value = "article_id",required = false)Long article_id) {
+                                           @RequestParam(value = "article_id", required = false) Long article_id) {
+
         commentService.deleteById(id);
         return Result.success();
     }
@@ -129,33 +131,32 @@ public class CommentController {
      * @param id
      * @param pageNum
      * @param pageSize
-     *
      * @return
-     * */
+     */
     @ApiOperation(value = "Get Comment By Id which id is article's id")
     @ResponseBody
     @GetMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
     @Cacheable(value = "comment")
     @Transactional
     public Result showComment(@PathVariable(value = "id") Long id,
-                                      @RequestParam(value = "pageNum", required = false, defaultValue = "3") int pageNum,
-                                      @RequestParam(value = "pageSize", required = false, defaultValue = "3") int pageSize) {
+                              @RequestParam(value = "pageNum", required = false, defaultValue = "3") int pageNum,
+                              @RequestParam(value = "pageSize", required = false, defaultValue = "3") int pageSize) {
         LOGGER.info("Get  Comment via id....");
         LOGGER.info("Comment id:{}", id);
 
         PageHelper.startPage(pageNum, pageSize);
         List<Comment> commentList = commentService.showComment(id);
         PageInfo<Comment> commentPageInfo = new PageInfo<>(commentList);
-        List<Comment> pageList=commentPageInfo.getList();
+        List<Comment> pageList = commentPageInfo.getList();
 
         return Result.success(pageList);
     }
 
     @ResponseBody
-    @GetMapping(value = "/article")
+    @GetMapping(value = "/article", produces = "application/json", consumes = "application/json")
     public List<Comment> getCommentById(@RequestParam(value = "id") Long id) {
 
 
         return commentService.showComment(id);
     }
- }
+}

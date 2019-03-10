@@ -2,6 +2,7 @@ package org.starrier.dreamwar.repository;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.parameters.P;
 import org.starrier.dreamwar.entity.Comment;
 
 import java.util.List;
@@ -13,11 +14,32 @@ import java.util.List;
 @Mapper
 public interface CommentDao {
 
-    void addComment(Comment comment);
+    /**
+     * add comment.
+     *
+     * @param comment
+     **/
+    void addComment(@Param("comment") Comment comment);
 
+    /**
+     * delete comment
+     *
+     * @param id
+     * */
     void deleteById(@Param("id") Long id);
 
-    void updateComment(Comment comment);
+    /**
+     * update comment
+     *
+     * @param comment
+     * */
+    void updateComment(@Param("comment") Comment comment);
 
-    List<Comment> showComment(Long id);
+    /**
+     * get comment
+     *
+     * @param id
+     * @return list
+     * */
+    List<Comment> showComment(@Param("id") Long id);
 }

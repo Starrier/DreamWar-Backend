@@ -21,6 +21,12 @@ public interface CommentService {
 
     void updateComment(Comment comment);
 
+    /**
+     * get comments
+     *
+     * @param id
+     * @return
+     * */
     List<Comment> showComment(Long id);
 
 

@@ -41,6 +41,9 @@ public class HttpAspect {
     @Before(value = "log()")
     public void doBefore(JoinPoint joinPoint) {
 
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Method Start : [{}]", System.currentTimeMillis());
+        }
         START_TIME.set(System.currentTimeMillis());
 
         // 接收到请求，记录请求内容
@@ -78,7 +81,11 @@ public class HttpAspect {
 
     @After("log()")
     public void doAfter() {
-        LOGGER.info("doAfter ......");
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("doAfter ......");
+            LOGGER.info("SPEND TIME : " + (System.currentTimeMillis() - START_TIME.get()));
+        }
+        START_TIME.remove();
     }
 
 
@@ -87,18 +94,21 @@ public class HttpAspect {
      * @throws Throwable running time exception.Maybe it is NPE.
      * */
     @AfterReturning(returning = "object", pointcut = "log()")
-    public void doAfterReturning(Object object) throws Throwable {
+    public void doAfterReturning(Object object){
         // 处理完请求，返回内容
-        LOGGER.info("RESPONSE : " + object);
-        LOGGER.info("SPEND TIME : " + (System.currentTimeMillis() - START_TIME.get()));
-
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("RESPONSE : " + object);
+            LOGGER.info("SPEND TIME : " + (System.currentTimeMillis() - START_TIME.get()));
+        }
         START_TIME.remove();
     }
 
 
     @AfterThrowing(pointcut = "log()")
     public void doAfterThrowing() {
-        LOGGER.error("doAfterThrowing: {}", " 异常情况!");
+        if (LOGGER.isErrorEnabled()) {
+            LOGGER.error("doAfterThrowing: {}", " 异常情况!");
+        }
     }
 
 
