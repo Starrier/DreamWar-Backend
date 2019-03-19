@@ -13,8 +13,8 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
-import org.starrier.dreamwar.util.common.enums.ExchangeEnum;
-import org.starrier.dreamwar.util.common.enums.QueueEnum;
+import org.starrier.dreamwar.utils.common.enums.ExchangeEnum;
+import org.starrier.dreamwar.utils.common.enums.QueueEnum;
 
 /**
  * @Author Starrier

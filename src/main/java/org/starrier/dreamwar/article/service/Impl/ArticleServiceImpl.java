@@ -7,6 +7,7 @@ import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheKey;
 import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheRemove;
 import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheResult;
 import javassist.NotFoundException;
+import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,8 @@ import org.springframework.stereotype.Service;
 import org.starrier.dreamwar.article.entity.Article;
 import org.starrier.dreamwar.article.repository.ArticleDao;
 import org.starrier.dreamwar.article.service.ArticleService;
-import org.starrier.dreamwar.util.common.Result;
-import org.starrier.dreamwar.util.common.enums.ResultCode;
+import org.starrier.dreamwar.utils.common.Result;
+import org.starrier.dreamwar.utils.common.enums.ResultCode;
 import org.starrier.dreamwar.comment.Comment;
 
 import javax.transaction.Transactional;
@@ -138,9 +139,9 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Comment> getCommentById(Long article_id) {
+    public List<Comment> getCommentById(Long articleId) {
 
-        Article article = articleDao.getArticleById(article_id);
+        Article article = articleDao.getArticleById(articleId);
 
         if (null == article) {
             LOGGER.error("This article:{} is not exist", article);
@@ -161,17 +162,15 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     @Async("taskExecutor")
+    @SneakyThrows(Exception.class)
     public void executeAsynchronous() {
-
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info(" Start Execute Asynchronous task....");
         }
-        try {
-            Thread.sleep(1000);
-        } catch (Exception e) {
-            e.printStackTrace();
+        Thread.sleep(1000);
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(" Aysn task has been done! ");
         }
-        LOGGER.info(" Aysn task has been done! ");
     }
 
     /**
@@ -216,6 +215,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
 
         List<Article> articleList = new ArrayList<>();
+
 
         for (Long articleId : articleParam) {
             if (LOGGER.isInfoEnabled()) {

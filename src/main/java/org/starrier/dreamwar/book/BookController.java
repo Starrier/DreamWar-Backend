@@ -1,16 +1,16 @@
 package org.starrier.dreamwar.book;
 
 
-import org.starrier.dreamwar.util.PaginatedResult;
-import org.starrier.dreamwar.util.common.PageConstant;
-import org.starrier.dreamwar.util.common.ResourceNameConstant;
-import org.starrier.dreamwar.util.PageUtil;
+import org.starrier.dreamwar.utils.PaginatedResult;
+import org.starrier.dreamwar.utils.common.PageConstant;
+import org.starrier.dreamwar.utils.common.ResourceNameConstant;
+import org.starrier.dreamwar.utils.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.starrier.dreamwar.util.common.exception.ResourceNotFoundException;
+import org.starrier.dreamwar.utils.common.exception.ResourceNotFoundException;
 
 import java.net.URI;
 

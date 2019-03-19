@@ -5,7 +5,7 @@
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
     </logger>
-    <logger name="org.starrier.dreamwar.util.helper" level="WARN" additivity="false">
+    <logger name="org.starrier.dreamwar.utils.helper" level="WARN" additivity="false">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
     </logger>

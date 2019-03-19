@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.starrier.dreamwar.util.FileUtil;
+import org.starrier.dreamwar.utils.FileUtil;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

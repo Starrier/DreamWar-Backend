@@ -8,8 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.starrier.dreamwar.config.TokenProvider;
-import org.starrier.dreamwar.auth.AuthToken;
+import org.starrier.dreamwar.config.token.TokenProvider;
 import org.starrier.dreamwar.user.entity.LoginUser;
 import org.starrier.dreamwar.user.service.UserService;
 

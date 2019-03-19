@@ -4,7 +4,7 @@ package org.starrier.dreamwar.book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.starrier.dreamwar.util.PageUtil;
+import org.starrier.dreamwar.utils.PageUtil;
 
 import java.util.List;
 import java.util.Optional;

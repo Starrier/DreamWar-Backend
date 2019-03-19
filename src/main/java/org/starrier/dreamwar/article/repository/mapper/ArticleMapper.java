@@ -1,9 +1,10 @@
 package org.starrier.dreamwar.article.repository.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.starrier.dreamwar.article.entity.Article;
 import org.starrier.dreamwar.article.repository.ArticleDao;
-import org.starrier.dreamwar.comment.Comment;
+import org.starrier.dreamwar.comment.entity.Comment;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public interface ArticleMapper extends ArticleDao {
      * @param article Article
      */
     @Override
-    void insertArticle(Article article);
+    void insertArticle(@Param("article")Article article);
 
     /**
      * Delete Article By id.
@@ -27,7 +28,7 @@ public interface ArticleMapper extends ArticleDao {
      * @param id Long
      */
     @Override
-    void deleteById(Long id);
+    void deleteById(@Param("id") Long id);
 
     /**
      * Delete Article By Author.
@@ -35,7 +36,7 @@ public interface ArticleMapper extends ArticleDao {
      * @param author String
      */
     @Override
-    void deleteArticleByAuthor(String author);
+    void deleteArticleByAuthor(@Param("author") String author);
 
     /**
      * Delete   :   Delete Article By article.
@@ -43,15 +44,15 @@ public interface ArticleMapper extends ArticleDao {
      * @param article Article
      */
     @Override
-    void deleteArticle(Article article);
+    void deleteArticle(@Param("article") Article article);
 
     /**
-     * 更新文章.
+     * Update article.
      *
      * @param article Article
      */
     @Override
-    void updateArticle(Article article);
+    void updateArticle(@Param("article") Article article);
 
     /**
      * 通过时间显示文章列表.
@@ -68,7 +69,7 @@ public interface ArticleMapper extends ArticleDao {
      * @return return the result
      */
     @Override
-   List<Article> getArticlesByCategoryId(int categoryId);
+   List<Article> getArticlesByCategoryId(@Param("categoryId") int categoryId);
 
     /**
      * 通过时间查询文章列表.

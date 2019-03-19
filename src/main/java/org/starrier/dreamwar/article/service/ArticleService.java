@@ -2,7 +2,7 @@ package org.starrier.dreamwar.article.service;
 
 
 import org.starrier.dreamwar.article.entity.Article;
-import org.starrier.dreamwar.comment.Comment;
+import org.starrier.dreamwar.comment.entity.Comment;
 
 import java.util.List;
 import java.util.Optional;

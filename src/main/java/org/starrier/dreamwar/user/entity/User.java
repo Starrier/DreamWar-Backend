@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
-import org.starrier.dreamwar.util.annotation.IsMobile;
+import org.starrier.dreamwar.utils.annotation.IsMobile;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;

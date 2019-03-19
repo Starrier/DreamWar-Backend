@@ -2,7 +2,7 @@ package org.starrier.dreamwar.rabbitmq;
 
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.amqp.rabbit.support.CorrelationData;
-import org.starrier.dreamwar.util.common.enums.ExchangeEnum;
+import org.starrier.dreamwar.utils.common.enums.ExchangeEnum;
 
 /**
  * @Author Starrier

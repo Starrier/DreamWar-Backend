@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.starrier.dreamwar.comment.Comment;
+import org.starrier.dreamwar.comment.entity.Comment;
 
 import javax.persistence.*;
 import java.io.Serializable;

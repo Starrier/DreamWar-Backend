@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 import org.starrier.dreamwar.article.entity.Article;
-import org.starrier.dreamwar.comment.Comment;
+import org.starrier.dreamwar.comment.entity.Comment;
 
 
 import java.util.List;
