@@ -25,7 +25,7 @@ public class MapCache {
 
 
     public <T> T get(String key) {
-
+        return null;
     }
 
     @Data
