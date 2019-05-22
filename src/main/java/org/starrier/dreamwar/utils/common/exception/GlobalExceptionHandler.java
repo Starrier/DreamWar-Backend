@@ -1,7 +1,6 @@
 package org.starrier.dreamwar.utils.common.exception;
 
 import javassist.NotFoundException;
-import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.listener.exception.ListenerExecutionFailedException;
@@ -63,17 +62,6 @@ public class GlobalExceptionHandler {
         return Result.error(ResultCode.PARAM_IS_INVALID, parameterInvalidItems);
     }
 
-    @ExceptionHandler(AuthorizationException.class)
-    public ResponseEntity<Result> AuthorizationExceptionHandler(HttpServletRequest request, AuthorizationException e) {
-        if (LOGGER.isErrorEnabled()) {
-            LOGGER.error("Authorization Error,url:[{}]", request.getRequestURL());
-            LOGGER.error("Exception is ", e);
-        }
-        HttpStatus status = HttpStatus.OK;
-        Result result = new Result();
-        result.setResultCode(ResultCode.USER_NOT_LOGGED_IN);
-        return new ResponseEntity<>(result, status);
-    }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NotFoundException.class)
