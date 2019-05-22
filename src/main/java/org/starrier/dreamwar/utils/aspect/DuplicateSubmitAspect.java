@@ -1,5 +1,7 @@
 package org.starrier.dreamwar.utils.aspect;
 
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -17,21 +19,19 @@ import java.util.UUID;
  * @author Starrier
  * @date 2018/12/9.
  */
-
+@Slf4j
 @Aspect
 @Component
 public class DuplicateSubmitAspect {
-
-    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(DuplicateSubmitAspect.class);
 
     public static final String DUPLICATE_TOKEN_KEY = "duplicate_token_key";
 
     @Pointcut("execution(public * org.starrier.dreamwar.controller..*(..))")
     public void webLog() { }
 
-
+    @SneakyThrows(Exception.class)
     @Before("webLog() && @annotation(token)")
-    public void before(final JoinPoint joinPoint, DuplicateSubmitToken token) throws Exception {
+    public void before(final JoinPoint joinPoint, DuplicateSubmitToken token)  {
         if (token!=null){
             Object[]args=joinPoint.getArgs();
             HttpServletRequest request=null;
@@ -51,7 +51,7 @@ public class DuplicateSubmitAspect {
                 if (null==t){
                     String uuid= UUID.randomUUID().toString();
                     request.getSession().setAttribute(DUPLICATE_TOKEN_KEY,uuid);
-                    LOGGER.info("进入方法：token="+uuid);
+                    log.info("进入方法：token="+uuid);
                 }else {
                     throw new Exception("请不要重复请求！");
                 }
@@ -63,7 +63,7 @@ public class DuplicateSubmitAspect {
     @AfterReturning("webLog() && @annotation(token)")
     public void doAfterReturning(JoinPoint joinPoint, DuplicateSubmitToken token) {
         // 处理完请求，返回内容
-        LOGGER.info("出来方法：");
+        log.info("出来方法：");
         if (token!=null){
             Object[]args=joinPoint.getArgs();
             HttpServletRequest request=null;
@@ -78,7 +78,7 @@ public class DuplicateSubmitAspect {
                 if (null!=t){
                     //方法执行完毕移除请求重复标记
                     request.getSession(false).removeAttribute(DUPLICATE_TOKEN_KEY);
-                    LOGGER.info("方法执行完毕移除请求重复标记！");
+                    log.info("方法执行完毕移除请求重复标记！");
                 }
             }
         }

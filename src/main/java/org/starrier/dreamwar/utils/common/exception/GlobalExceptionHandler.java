@@ -1,4 +1,4 @@
-package org.starrier.dreamwar.util.common.exception;
+package org.starrier.dreamwar.utils.common.exception;
 
 import javassist.NotFoundException;
 import org.apache.shiro.authz.AuthorizationException;
@@ -11,13 +11,20 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
-import org.starrier.dreamwar.util.common.ParameterInvalidItem;
-import org.starrier.dreamwar.util.common.Result;
-import org.starrier.dreamwar.util.common.enums.ResultCode;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.starrier.common.result.Result;
+import org.starrier.common.result.ResultCode;
+import org.starrier.dreamwar.utils.common.ParameterInvalidItem;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Starrier
@@ -63,17 +70,14 @@ public class GlobalExceptionHandler {
             LOGGER.error("Exception is ", e);
         }
         HttpStatus status = HttpStatus.OK;
-
-        Result result= new Result();
+        Result result = new Result();
         result.setResultCode(ResultCode.USER_NOT_LOGGED_IN);
-
-        return new ResponseEntity<>(result,status);
+        return new ResponseEntity<>(result, status);
     }
-
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<Result> notFoundException(HttpServletRequest request,NotFoundException e) {
+    public ResponseEntity<Result> notFoundException(HttpServletRequest request, NotFoundException e) {
         if (LOGGER.isErrorEnabled()) {
             LOGGER.error("Not found:[{}]", e.getMessage());
             loggerInformation(request, e);
@@ -121,25 +125,24 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(result, status);
     }
 
-
-     /**
+    /**
      * @param request {@link HttpServletRequest}
-     * @param e {@link Exception}
+     * @param e       {@link Exception}
      * @return return result
      **/
-     public String jsonHandler(HttpServletRequest request, Exception e) {
+    public String jsonHandler(HttpServletRequest request, Exception e) {
         LOGGER.error("Request URL:[{}]", request.getRequestURL().toString());
         loggerInformation(request, e);
         return null;
-     }
+    }
 
-     /**
+    /**
      * <p>loggerInformation</p>
      *
      * @param request {@link Exception}
-     * @param e {@link HttpServletRequest}
+     * @param e       {@link HttpServletRequest}
      **/
-     private void loggerInformation(HttpServletRequest request, Exception e){
+    private void loggerInformation(HttpServletRequest request, Exception e) {
         if (LOGGER.isErrorEnabled()) {
             LOGGER.error("Exception has happened....");
             LOGGER.error("Exception detail message:[{}]", e);
@@ -156,24 +159,22 @@ public class GlobalExceptionHandler {
             }
             LOGGER.error("Exception detail information has ended!");
         }
-     }
+    }
 
     /**
      * <p>HttpRequestMethodNotSupportException</p>
      *
      * @param request get request type
-     * @param e exception detail message
+     * @param e       exception detail message
      * @return Return new {@link ResponseEntity} to invoker with json format
-     *
      */
-     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-     @ResponseBody
-     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-     public ResponseEntity<?> httpRequestMethodNotSupport(HttpServletRequest request, Exception e) {
-         if (LOGGER.isErrorEnabled()) {
-             LOGGER.error("HttpRequestMethodNotSupport:[{}]", request.getMethod());
-         }
-
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    @ResponseBody
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<?> httpRequestMethodNotSupport(HttpServletRequest request, Exception e) {
+        if (LOGGER.isErrorEnabled()) {
+            LOGGER.error("HttpRequestMethodNotSupport:[{}]", request.getMethod());
+        }
         return new ResponseEntity<>("HttpRequestMethodNotSupport!", HttpStatus.METHOD_NOT_ALLOWED);
     }
 

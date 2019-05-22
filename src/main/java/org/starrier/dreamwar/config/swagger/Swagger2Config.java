@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Author Starrier
- * @Time 2018/6/5.
+ * @author  Starrier
+ * @date  2018/6/5.
  */
 @Configuration
 @EnableSwagger2
@@ -47,7 +47,7 @@ public class Swagger2Config {
      */
     private List<Parameter> setToken(){
         ParameterBuilder tokenPar = new ParameterBuilder();
-        List<Parameter> pars = new ArrayList<Parameter>();
+        List<Parameter> pars = new ArrayList<>();
         tokenPar.name("Authorization").description("令牌").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
         pars.add(tokenPar.build());
         return pars;

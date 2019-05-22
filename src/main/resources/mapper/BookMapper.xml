@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.starrier.dreamwar.book.BookMapper">
+<mapper namespace="org.starrier.dreamwar.repository.mapper.BookMapper">
 
-    <resultMap id="book" type="org.starrier.dreamwar.book.Book">
+    <resultMap id="book" type="org.starrier.dreamwar.model.entity.Book">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="author" column="author"/>
@@ -12,7 +12,7 @@
         <result property="bookStoreId" column="book_store_id"/>
     </resultMap>
 
-    <resultMap id="bookWithBookStore" type="org.starrier.dreamwar.book.BookWithBookStore">
+    <resultMap id="bookWithBookStore" type="org.starrier.dreamwar.model.BookWithBookStore">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="author" column="author"/>
@@ -20,7 +20,7 @@
         <result property="topic" column="topic"/>
         <result property="publishDate" column="publish_date"/>
         <result property="bookStoreId" column="book_store_id"/>
-        <association property="bookStore" javaType="String" resultMap="org.starrier.dreamwar.book.BookStoreMapper.bookStore" columnPrefix="book_store_"/>
+        <association property="bookStore" javaType="String" resultMap="org.starrier.dreamwar.repository.mapper.BookStoreMapper.bookStore" columnPrefix="book_store_"/>
     </resultMap>
 
     <insert id="insertBook" useGeneratedKeys="true" keyProperty="id"><![CDATA[

@@ -37,7 +37,7 @@ public class RateLimiterAop {
     /**
      * Defining pointcut intercept request.
      * */
-    @Pointcut("execution(public * org.starrier.dreamwar.article.ArticleController.*(..))")
+    @Pointcut("execution(public * org.starrier.dreamwar.controller.article.ArticleController.*(..))")
     public void rateLimiterAop(){}
 
     /**

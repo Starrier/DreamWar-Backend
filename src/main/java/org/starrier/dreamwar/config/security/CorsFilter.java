@@ -1,10 +1,14 @@
 package org.starrier.dreamwar.config.security;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -12,14 +16,13 @@ import java.io.IOException;
  * @author Starrier
  * @date 2019/1/7.
  */
+@Slf4j
 public class CorsFilter implements Filter {
-
-    public static final Logger LOGGER = LoggerFactory.getLogger(CorsFilter.class);
 
     /**
      * @param filterConfig
      * @throws ServletException
-     * */
+     */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -29,13 +32,12 @@ public class CorsFilter implements Filter {
      * @param servletRequest
      * @param servletResponse
      * @param filterChain
-     *
-     * */
+     */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Cors Filtering is executing!");
+        if (log.isDebugEnabled()) {
+            log.debug("Cors Filtering is executing!");
         }
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 

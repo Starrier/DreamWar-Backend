@@ -14,21 +14,18 @@ import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * @Author Starrier
- * @Time 2018/11/6.
+ * @author  Starrier
+ * @date  2018/11/6.
  */
 @Configuration
 public class RedisConfig extends CachingConfigurerSupport {
 
-
         @Bean
         RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory,
                                                 MessageListenerAdapter listenerAdapter) {
-
             RedisMessageListenerContainer container = new RedisMessageListenerContainer();
             container.setConnectionFactory(connectionFactory);
             container.addMessageListener(listenerAdapter, new PatternTopic("chat"));
-
             return container;
         }
 

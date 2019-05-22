@@ -359,6 +359,11 @@
 			<version>2.0.0.RELEASE</version>
 		</dependency>
 		<!--    END    :    JSON    -->
+		<dependency>
+			<groupId>org.starrier</groupId>
+			<artifactId>common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

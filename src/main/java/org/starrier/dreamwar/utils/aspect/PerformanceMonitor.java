@@ -1,27 +1,24 @@
 package org.starrier.dreamwar.utils.aspect;
 
-/**
- * @Author Starrier
- * @Time 2018/6/5.
- */
-
 import lombok.extern.apachecommons.CommonsLog;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.StopWatch;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author Starrier
+ * @date 2018/6/5.
+ */
 @CommonsLog
 @Aspect
+@Slf4j
 @Component
 public class PerformanceMonitor {
-
-    public static final Logger LOGGER = LoggerFactory.getLogger(PerformanceMonitor.class);
 
     /**
      * A join point is in the controller layer if the method is
@@ -52,14 +49,10 @@ public class PerformanceMonitor {
         Signature signature = proceedingJoinPoint.getSignature();
         String infoString = "[" + signature.toShortString() + "][Elapsed time: " + elapsedTime + " s]";
         if (elapsedTime > 1) {
-            LOGGER.error(infoString + "[Note that it's time consuming!]");
+            log.error(infoString + "[Note that it's time consuming!]");
         } else {
-            LOGGER.info(infoString);
+            log.info(infoString);
         }
-
-        /**
-         *      Return the result
-         */
         return result;
     }
 

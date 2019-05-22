@@ -2,29 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 将namespace的值设置为DAO类对应的路径 -->
-<mapper namespace="org.starrier.dreamwar.article.repository.mapper.ArticleMapper">
+<mapper namespace="org.starrier.dreamwar.repository.mapper.ArticleMapper">
     <!-- 目的：为DAO接口方法提供sql语句配置 -->
-    <resultMap id="Article" type="org.starrier.dreamwar.article.entity.Article">
+    <resultMap id="Article" type="org.starrier.dreamwar.model.entity.Article">
         <result property="id" column="id" />
         <result property="title" column="title" />
         <result property="content" column="content"/>
         <result property="author" column="author"/>
         <result property="category" column="category"/>
-        <result property="comment_count" column="comment_count"/>
+        <result property="commentCount" column="comment_count"/>
         <result property="create_date" column="create_date" jdbcType="TIMESTAMP"/>
-        <result property="update_date" column="update_date" jdbcType="TIMESTAMP"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
         <result property="summary" column="summary"/>
         <result property="version" column="version" jdbcType="BIGINT"/>
     </resultMap>
 
-    <resultMap id="Comment" type="org.starrier.dreamwar.comment.entity.Comment">
+    <resultMap id="Comment" type="org.starrier.dreamwar.model.entity.Comment">
         <result property="id" column="id"/>
         <result property="comment" column="comment"/>
         <result property="article_id" column="article_id"/>
         <result property="date" column="date"/>
     </resultMap>
 
-    <insert id="insertArticle" parameterType="org.starrier.dreamwar.article.entity.Article" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+    <insert id="insertArticle" parameterType="org.starrier.dreamwar.model.entity.Article" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into article (
             title,content,author,category,summary
                     )values (
@@ -32,19 +32,19 @@
         )
     ]]></insert>
 
-    <delete id="deleteById" parameterType="org.starrier.dreamwar.article.entity.Article">
+    <delete id="deleteById" parameterType="org.starrier.dreamwar.model.entity.Article">
         delete from article where id=#{id}
     </delete>
 
-    <delete id="deleteArticleByAuthor" parameterType="org.starrier.dreamwar.article.entity.Article">
+    <delete id="deleteArticleByAuthor" parameterType="org.starrier.dreamwar.model.entity.Article">
         delete from article where author=#{author}
     </delete>
 
-    <delete id="deleteArticle" parameterType="org.starrier.dreamwar.article.entity.Article">
+    <delete id="deleteArticle" parameterType="org.starrier.dreamwar.model.entity.Article">
         delete from article where id=#{id}
     </delete>
 
-    <update id="updateArticle" parameterType="org.starrier.dreamwar.article.entity.Article">
+    <update id="updateArticle" parameterType="org.starrier.dreamwar.model.entity.Article">
         update article
         <set>
         <if test="author != null and author != ''">
@@ -101,11 +101,11 @@
         where
             article.id=comment.article_id=#{id};
     </select>
-    <select id="getArticlesByKeyword" parameterType="org.starrier.dreamwar.article.entity.Article" resultMap="Article">
+    <select id="getArticlesByKeyword" parameterType="org.starrier.dreamwar.model.entity.Article" resultMap="Article">
 
     </select>
 
-    <select id="getAllAuthorName" parameterType="org.starrier.dreamwar.article.entity.Article" resultMap="Article"><![CDATA[
+    <select id="getAllAuthorName" parameterType="org.starrier.dreamwar.model.entity.Article" resultMap="Article"><![CDATA[
         select *
         from article;
     ]]></select>

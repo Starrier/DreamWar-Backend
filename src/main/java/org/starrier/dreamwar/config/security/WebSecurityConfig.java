@@ -1,6 +1,7 @@
 package org.starrier.dreamwar.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,18 +16,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.starrier.dreamwar.config.token.JwtAuthenticationFilter;
 
-import javax.annotation.Resource;
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Resource(name = "userService")
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
-    @Autowired
-    private JwtAuthenticationEntryPoint unauthorizedHandler;
+    private final JwtAuthenticationEntryPoint unauthorizedHandler;
+
+    public WebSecurityConfig(JwtAuthenticationEntryPoint unauthorizedHandler, @Qualifier("userService") UserDetailsService userDetailsService) {
+        this.unauthorizedHandler = unauthorizedHandler;
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     @Bean
@@ -52,12 +54,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/token/*", "/signup", "/validate").permitAll()
                 .antMatchers("/articles").permitAll()
                 // swagger start
-               /* .antMatchers("/swagger-ui.html").permitAll()
-                .antMatchers("/swagger-resources").permitAll()
-                .antMatchers("/images/**").permitAll()
-                .antMatchers("/webjars/**").permitAll()
-                .antMatchers("/v2/*").permitAll()
-                .antMatchers("/configuration/*").permitAll()*/
+                /* .antMatchers("/swagger-ui.html").permitAll()
+                 .antMatchers("/swagger-resources").permitAll()
+                 .antMatchers("/images/**").permitAll()
+                 .antMatchers("/webjars/**").permitAll()
+                 .antMatchers("/v2/*").permitAll()
+                 .antMatchers("/configuration/*").permitAll()*/
                 // swagger end
                 .antMatchers("/druid/index.html").permitAll()
                 .anyRequest().authenticated()
@@ -69,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public BCryptPasswordEncoder encoder(){
+    public BCryptPasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
 

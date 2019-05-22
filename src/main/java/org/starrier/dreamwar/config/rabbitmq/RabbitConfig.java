@@ -1,7 +1,6 @@
 package org.starrier.dreamwar.config.rabbitmq;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -17,13 +16,12 @@ import org.starrier.dreamwar.utils.common.enums.ExchangeEnum;
 import org.starrier.dreamwar.utils.common.enums.QueueEnum;
 
 /**
- * @Author Starrier
- * @Time 2018/11/11.
+ * @author Starrier
+ * @date 2018/11/11.
  */
+@Slf4j
 @Configuration
 public class RabbitConfig {
-
-    private Logger logger = LoggerFactory.getLogger(RabbitConfig.class);
 
     public static final String TOPIC_QUEUE = "topic.queue";
     public static final String TOPIC_EXCHANGE = "commentexchange";
@@ -46,16 +44,10 @@ public class RabbitConfig {
         return BindingBuilder.bind(queue()).to(topicExchange()).with("topic.#");
     }
 
-
-    /**
-     * 配置用户注册主题交换
-     * @return
-     */
     @Bean
-    public TopicExchange userTopicExchange()
-    {
+    public TopicExchange userTopicExchange() {
         TopicExchange topicExchange = new TopicExchange(ExchangeEnum.USER_REGISTER_TOPIC_EXCHANGE.getName());
-        logger.info("用户注册交换机。");
+        log.info("用户注册交换机。");
         return topicExchange;
     }
 
@@ -63,13 +55,13 @@ public class RabbitConfig {
      * 配置用户注册
      * 发送激活邮件消息队列
      * 并设置持久化队列
+     *
      * @return
      */
     @Bean
-    public Queue sendRegisterMailQueue()
-    {
-        Queue queue = new Queue(QueueEnum.USER_REGISTER_SEND_MAIL.getName(),true);
-        logger.info("创建用户注册，发送邮件队列");
+    public Queue sendRegisterMailQueue() {
+        Queue queue = new Queue(QueueEnum.USER_REGISTER_SEND_MAIL.getName(), true);
+        log.info("创建用户注册，发送邮件队列");
         return queue;
     }
 
@@ -77,45 +69,46 @@ public class RabbitConfig {
      * 配置用户注册.
      * 创建账户消息队列.
      * 并设置持久化队列.
+     *
      * @return return the new queue.
      */
     @Bean
-    public Queue createAccountQueue()
-    {
+    public Queue createAccountQueue() {
         Queue queue = new Queue(QueueEnum.USER_REGISTER_CREATE_ACCOUNT.name(), true);
-        logger.info("创建用户注册账号，操作成功队列.");
+        log.info("创建用户注册账号，操作成功队列.");
         return queue;
     }
 
     /**
      * 绑定用户发送注册激活邮件队列到用户注册主题交换配置.
+     *
      * @return return the new Binding.
      */
     @Bean
-    public Binding sendMailBinding()
-    {
+    public Binding sendMailBinding() {
         Binding binding = BindingBuilder.bind(sendRegisterMailQueue()).to(userTopicExchange()).with(QueueEnum.USER_REGISTER_SEND_MAIL.getRoutingKey());
-        logger.info("绑定发送邮件到注册交换成功");
+        log.info("绑定发送邮件到注册交换成功");
         return binding;
     }
 
     /**
      * 绑定用户创建账户到用户注册主题交换配置.
+     *
      * @return the new Binding.
      */
     @Bean
-    public Binding createAccountBinding()
-    {
+    public Binding createAccountBinding() {
         Binding binding = BindingBuilder.bind(createAccountQueue()).to(userTopicExchange()).with(QueueEnum.USER_REGISTER_CREATE_ACCOUNT.getRoutingKey());
-        logger.info("绑定创建账号到注册交换成功。");
+        log.info("绑定创建账号到注册交换成功。");
         return binding;
     }
 
     /**
      * 因为要设置回调类，所以应是prototype类型，
      * 如果是singleton类型，则回调类为最后一次设置.
+     *
      * @return return the Override rabbitTemplate {@link RabbitTemplate}.
-     * */
+     */
     @Bean
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {

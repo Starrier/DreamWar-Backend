@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.starrier.dreamwar.user.repository.mapper.UserMapper">
+<mapper namespace="org.starrier.dreamwar.repository.mapper.UserMapper">
 
 
-    <resultMap id="user" type="org.starrier.dreamwar.user.entity.User">
+    <resultMap id="user" type="org.starrier.dreamwar.model.vo.User">
         <id property="id" column="id"/>
         <result property="username" column="username"/>
         <result property="password" column="password"/>
