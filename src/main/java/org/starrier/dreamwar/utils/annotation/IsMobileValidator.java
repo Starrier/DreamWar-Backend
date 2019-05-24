@@ -21,6 +21,6 @@ public class IsMobileValidator implements ConstraintValidator<IsMobile,String> {
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
 
-        return required ? ValidatorUtil.isMobile(value) : (StringUtils.isEmpty(value) || ValidatorUtil.isMobile(value));
+        return required ? org.starrier.dreamwar.util.annotation.ValidatorUtil.isMobile(value) : (StringUtils.isEmpty(value) || org.starrier.dreamwar.util.annotation.ValidatorUtil.isMobile(value));
     }
 }

@@ -2,7 +2,7 @@ package org.starrier.dreamwar.repository.dao;
 
 
 import org.springframework.stereotype.Repository;
-import org.starrier.dreamwar.model.BookWithBookStore;
+import org.starrier.dreamwar.model.dto.BookWithBookStore;
 import org.starrier.dreamwar.model.entity.Book;
 
 import java.util.List;

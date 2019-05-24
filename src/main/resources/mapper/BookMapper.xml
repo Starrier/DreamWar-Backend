@@ -12,7 +12,7 @@
         <result property="bookStoreId" column="book_store_id"/>
     </resultMap>
 
-    <resultMap id="bookWithBookStore" type="org.starrier.dreamwar.model.BookWithBookStore">
+    <resultMap id="bookWithBookStore" type="org.starrier.dreamwar.model.dto.BookWithBookStore">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="author" column="author"/>

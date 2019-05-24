@@ -17,11 +17,11 @@ import org.springframework.retry.annotation.Retryable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.starrier.dreamwar.model.entity.Article;
+import org.starrier.dreamwar.model.entity.Comment;
 import org.starrier.dreamwar.repository.dao.ArticleDao;
 import org.starrier.dreamwar.service.interfaces.ArticleService;
 import org.starrier.dreamwar.utils.common.Result;
 import org.starrier.dreamwar.utils.common.enums.ResultCode;
-import org.starrier.dreamwar.comment.Comment;
 
 import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;

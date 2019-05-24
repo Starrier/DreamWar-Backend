@@ -1,8 +1,8 @@
 package org.starrier.dreamwar.service.interfaces;
 
 
-import org.starrier.dreamwar.model.BookStore;
-import org.starrier.dreamwar.model.BookStoreWithBooks;
+import org.starrier.dreamwar.model.entity.BookStore;
+import org.starrier.dreamwar.model.vo.BookStoreWithBooks;
 
 import java.util.List;
 import java.util.Optional;

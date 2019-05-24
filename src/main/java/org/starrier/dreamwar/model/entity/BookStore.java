@@ -1,4 +1,4 @@
-package org.starrier.dreamwar.model;
+package org.starrier.dreamwar.model.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

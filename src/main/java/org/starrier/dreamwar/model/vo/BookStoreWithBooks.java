@@ -1,11 +1,11 @@
-package org.starrier.dreamwar.model;
+package org.starrier.dreamwar.model.vo;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import org.starrier.dreamwar.model.BookStore;
+import org.starrier.dreamwar.model.entity.BookStore;
 import org.starrier.dreamwar.model.entity.Book;
 
 import java.util.List;

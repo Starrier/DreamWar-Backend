@@ -1,8 +1,8 @@
 package org.starrier.dreamwar.repository.repository;
 
 
-import org.starrier.dreamwar.model.BookStoreWithBooks;
-import org.starrier.dreamwar.model.BookStore;
+import org.starrier.dreamwar.model.vo.BookStoreWithBooks;
+import org.starrier.dreamwar.model.entity.BookStore;
 
 import java.util.List;
 

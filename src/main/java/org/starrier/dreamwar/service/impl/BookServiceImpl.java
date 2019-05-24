@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.starrier.dreamwar.repository.dao.BookDao;
-import org.starrier.dreamwar.model.BookWithBookStore;
+import org.starrier.dreamwar.model.dto.BookWithBookStore;
 import org.starrier.dreamwar.model.entity.Book;
 import org.starrier.dreamwar.service.interfaces.BookService;
 import org.starrier.dreamwar.utils.PageUtil;

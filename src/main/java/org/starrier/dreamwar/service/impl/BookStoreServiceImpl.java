@@ -3,9 +3,9 @@ package org.starrier.dreamwar.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.starrier.dreamwar.model.BookStore;
+import org.starrier.dreamwar.model.entity.BookStore;
 import org.starrier.dreamwar.repository.repository.BookStoreRepository;
-import org.starrier.dreamwar.model.BookStoreWithBooks;
+import org.starrier.dreamwar.model.vo.BookStoreWithBooks;
 import org.starrier.dreamwar.service.interfaces.BookStoreService;
 
 import java.util.List;

@@ -1,8 +1,8 @@
-package org.starrier.dreamwar.model;
+package org.starrier.dreamwar.model.dto;
 
 import lombok.*;
 import lombok.experimental.Accessors;
-import org.starrier.dreamwar.model.BookStore;
+import org.starrier.dreamwar.model.entity.BookStore;
 import org.starrier.dreamwar.model.entity.Book;
 
 
