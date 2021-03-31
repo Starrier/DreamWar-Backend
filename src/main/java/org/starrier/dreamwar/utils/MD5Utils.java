@@ -3,6 +3,7 @@ package org.starrier.dreamwar.util;
 import lombok.SneakyThrows;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -24,7 +25,7 @@ public class MD5Utils {
         byte[] result;
         MessageDigest md = MessageDigest.getInstance("MD5");
         md.reset();
-        md.update(source.getBytes("UTF-8"));
+        md.update(source.getBytes(StandardCharsets.UTF_8));
         result = md.digest();
         return result;
     }
@@ -33,8 +34,8 @@ public class MD5Utils {
         byte[] data = encode2bytes(source);
         StringBuffer hexString = new StringBuffer();
 
-        for (int i = 0; i < data.length; i++) {
-            String hex = Integer.toHexString(0xff & data[i]);
+        for (byte datum : data) {
+            String hex = Integer.toHexString(0xff & datum);
             if (hex.length() == 1) {
                 hexString.append('0');
             }

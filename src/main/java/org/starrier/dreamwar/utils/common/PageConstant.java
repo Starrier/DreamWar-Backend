@@ -2,8 +2,8 @@ package org.starrier.dreamwar.utils.common;
 
 
 /**
- * @Author Starrier
- * @Time 2018/6/5.
+ * @author  Starrier
+ * @date  2018/6/5.
  */
 
 public class PageConstant {
